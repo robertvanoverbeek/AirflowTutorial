@@ -8,7 +8,7 @@ backfilling historical data
 monitoring / logging
 standard operators enabling connections to many other infrastructures
 
-with airflow data engineers and data scientists don't waste much time on DevOps.
+with airflow in the cloud data engineers and data scientists don't waste much time on DevOps.
 
 
 what is asyclical graph. a pipeline.  Pipelines are designed as a directed acyclic graph by dividing a pipeline into tasks that can be executed independently. Then these tasks are combined logically as a graph.
