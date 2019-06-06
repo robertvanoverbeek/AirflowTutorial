@@ -9,9 +9,18 @@ monitoring / logging
 standard operators enabling connections to many other infrastructures
 
 
-what is asyclical graph
+what is asyclical graph. a pipeline.  Pipelines are designed as a directed acyclic graph by dividing a pipeline into tasks that can be executed independently. Then these tasks are combined logically as a graph.
 
 operators and sensors. 
+
+Databricks has contributed an Airflow operator which enables submitting runs to the Databricks platform.
+Airflow has extensive support for the Google Cloud Platform. But note that most Hooks and Operators are in the contrib section.
+Airflow has extensive support for Amazon Web Services. But note that the Hooks, Sensors and Operators are in the contrib section.
+Airflow has limited support for Microsoft Azure: interfaces exist only for Azure Blob Storage and Azure Data Lake. Hook, Sensor and Operator for Blob Storage and Azure Data Lake Hook are in contrib section.
+
+https://github.com/apache/airflow/tree/master/airflow/contrib
+
+
 
 
 This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract data from some place 
