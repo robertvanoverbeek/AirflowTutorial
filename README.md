@@ -57,6 +57,14 @@ explained in https://cloud.google.com/storage/docs/access-control/making-data-pu
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
 <sup>source: sensecorp.com</sup>
 <br/>
+
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowgraphview.PNG" width="100" height="20">
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowvars.png" width="100" height="300">
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="100" height="20">
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="50" height="50">
+
+
+	
 Generally the structure of an Airflow DAG consists of 5 parts:
 1. importing the modules and declaring variables
 2. default arguments
