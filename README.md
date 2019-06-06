@@ -2,6 +2,16 @@
 
 #### 3.1. Introduction
 
+voordelen behandelen versus cron jobs:
+error handling, including upstream errors (dependencies)
+backfilling historical data
+monitoring / logging
+standard operators enabling connections to many other infrastructures
+
+
+what is asyclical graph
+
+
 This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract data from some place 
 (public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load). 
 From there it can be made available as data source for i.g. reporting, for instance for the creation of a (Data Studio) dashboard. As a side note
@@ -11,7 +21,7 @@ We believe using a csv file stored in GCP for usage in a Power BI is only advisa
 explained in https://cloud.google.com/storage/docs/access-control/making-data-public
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
-source: sensecorp.com
+<sub>source: sensecorp.com</sub>
 <br/><br/>
 Generally the structure of an Airflow DAG consists of 5 parts:
 1. importing the modules and declaring variables
