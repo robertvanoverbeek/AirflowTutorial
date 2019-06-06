@@ -1,9 +1,10 @@
 """
 This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract data from some place 
-(public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load). 
-From there it can be made available as data source for i.g. reporting, for instance for the creation of a (Data Studio) dashboard. As a side note
-to this: If you use Power BI in combination with GCP (Google Cloud Platform) it is better to store and leave the data in BigQuery (which is a step in the 
-applied DAG below), as this makes securely accessing the data from Power BI easier with the standard BigQuery connector in Power BI.
+(public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) 
+as csv file (Load). From there it can be made available as data source for i.g. reporting, for instance for the creation of 
+a (Data Studio) dashboard. As a side note to this: If you use Power BI in combination with GCP (Google Cloud Platform) 
+it is better to store and leave the data in BigQuery (which is a step in the applied DAG below), as this makes securely 
+accessing the data from Power BI easier with the standard BigQuery connector in Power BI.
 We believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the data publicly available, which is
 explained in https://cloud.google.com/storage/docs/access-control/making-data-public
 
