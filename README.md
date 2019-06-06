@@ -1,4 +1,4 @@
-# Hands-on Airflow Tutorial
+# Hands-on Airflow Tutorial using Google Cloud Composer
 
 This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract data from some place 
 (public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load). 
