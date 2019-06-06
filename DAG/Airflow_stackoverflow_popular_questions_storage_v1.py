@@ -1,11 +1,14 @@
 """
-This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract data from some place 
-(public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load). 
-From there it can be made available as data source for i.g. reporting, for instance for the creation of a (Data Studio) dashboard. As a side note
-to this: If you use Power BI in combination with GCP (Google Cloud Platform) it is better to store and leave the data in BigQuery (which is a step in the 
-applied DAG below), as this makes securely accessing the data from Power BI easier with the standard BigQuery connector in Power BI.
-We believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the data publicly available, which is
-explained in https://cloud.google.com/storage/docs/access-control/making-data-public
+This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract 
+data from some place (public BigQuery dataset stackoverflow.posts_questions) over a certain time period 
+and store it in a certain form (Transform) as csv file (Load). From there it can be made available as 
+data source for i.g. reporting, for instance for the creation of a (Data Studio) dashboard. 
+As a side note to this: If you use Power BI in combination with GCP (Google Cloud Platform) it is better 
+to store and leave the data in BigQuery (which is a step in the applied DAG below), as this makes 
+securely accessing the data from Power BI easier with the standard BigQuery connector in Power BI.
+We believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the 
+data publicly available, which is explained in 
+https://cloud.google.com/storage/docs/access-control/making-data-public
 
 Generally the structure of an Airflow DAG consists of 5 parts:
 1. importing the modules and declaring variables
@@ -24,7 +27,8 @@ Check https://airflow.apache.org/concepts.html#variables if you want more inform
 Check https://cloud.google.com/storage/docs/creating-buckets if you need more information on creating a gcp bucket,
 as this is beyond the scope of this Airflow POC example.
 
-The used DAG is inspired by https://github.com/GoogleCloudPlatform/python-docs-samples/blob/master/composer/workflows/bq_notify.py
+The used DAG is inspired by 
+https://github.com/GoogleCloudPlatform/python-docs-samples/blob/master/composer/workflows/bq_notify.py
 In the above-mentioned github repo you can also find more examples.
 """
 
@@ -44,12 +48,14 @@ For some static variables, like references to project names and storage location
 it can be useful to separate them from the code itself. This is also very useful if you
 apply the variables to multiple DAG files. Then, if you then need to change the variable you only
 have to change it in a single location.
-Airflow Variables are stored in Metadata Database, so any call to variables would mean a connection to Metadata DB.
-Your DAG files are parsed every X seconds. If you use a large number of variable in your DAG could mean you might end
-up saturating the number of allowed connections to your database.
+Airflow Variables are stored in Metadata Database, so any call to variables would mean a connection 
+to Metadata DB.
+Your DAG files are parsed every X seconds. If you use a large number of variable in your DAG could mean 
+you might end up saturating the number of allowed connections to your database.
 To avoid this situation, it is advisable to use a single Airflow variable with JSON value.
 For instance this case, under Admin > variables in the UI we will save a key 'dag_xyz_config', with
-a a set (replace the values with your project ID and bucket name without the gs:// prefix, as we fill it in below):
+a a set (replace the values with your project ID and bucket name without 
+the gs:// prefix, as we fill it in below):
 {"gcp_project": "ml-test-240115", "gcs_bucket": "airflowbucket_tst"}
 """
 dag_vars = models.Variable.get("dag_xyz_config", deserialize_json=True)
