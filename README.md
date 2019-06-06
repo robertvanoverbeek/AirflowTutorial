@@ -65,7 +65,8 @@ explained in https://cloud.google.com/storage/docs/access-control/making-data-pu
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="820" height="767">
 <br/>
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
-
+<br/>
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
 
 	
 Generally the structure of an Airflow DAG consists of 5 parts:
