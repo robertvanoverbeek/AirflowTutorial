@@ -9,7 +9,7 @@ We believe using a csv file stored in GCP for usage in a Power BI is only advisa
 explained in https://cloud.google.com/storage/docs/access-control/making-data-public
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
-*source: sensecorp.com*
+** source: sensecorp.com **
 _This text is italicized__
 
 Generally the structure of an Airflow DAG consists of 5 parts:
