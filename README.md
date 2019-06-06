@@ -27,8 +27,8 @@ Airflow has limited support for Microsoft Azure: interfaces exist only for Azure
 
 https://github.com/apache/airflow/tree/master/airflow/contrib
 
-steps in gcp:
-make google account which comes with $300,- free trial.
+#### 2. Setting up the Airflow environment in GCP
+A prerequisite to this is that you have a google account (gmail account), with which you can launch Google Cloud Platform (GCP). GCP comes with $300,- free trial credit.
 
 in GCP navigate to 'Composer' via the 'hamburger' icon in the top left corner. 
 selecteer:
