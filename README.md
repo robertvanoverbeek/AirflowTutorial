@@ -59,8 +59,11 @@ explained in https://cloud.google.com/storage/docs/access-control/making-data-pu
 <br/>
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowgraphview.PNG" width="100" height="20">
+<br/>
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowvars.png" width="100" height="300">
+<br/>
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="100" height="20">
+<br/>
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="50" height="50">
 
 
