@@ -10,6 +10,10 @@ standard operators enabling connections to many other infrastructures
 
 with airflow in the cloud data engineers and data scientists don't waste much time on DevOps.
 
+integration in the cloud with big data, machine learning. 
+
+you can build end-to-end (ML) solutions in the cloud with Airflow in combination with the other cloud services. 
+
 
 what is asyclical graph. a pipeline.  Pipelines are designed as a directed acyclic graph by dividing a pipeline into tasks that can be executed independently. Then these tasks are combined logically as a graph.
 
@@ -23,6 +27,12 @@ Airflow has limited support for Microsoft Azure: interfaces exist only for Azure
 https://github.com/apache/airflow/tree/master/airflow/contrib
 
 
+setup airflow in gcp with cloud composer:
+laat menu zien
+selecteer:
+name, location, machine type (kies het meest eenvoudige), disk size (kies kleinste), python version 3.
+
+then wait a few minutes, after which you can drill down with the link. 
 
 
 This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract data from some place 
