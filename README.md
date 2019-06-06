@@ -1,6 +1,7 @@
 # Hands-on Airflow Tutorial using Google Cloud Composer
 
-#### 3.1. Introduction
+#### 1. Introduction
+This tutorial is an introduction to 
 
 voordelen behandelen versus cron jobs:
 error handling, including upstream errors (dependencies)
@@ -26,14 +27,24 @@ Airflow has limited support for Microsoft Azure: interfaces exist only for Azure
 
 https://github.com/apache/airflow/tree/master/airflow/contrib
 
+steps in gcp:
+make google account which comes with $300,- free trial.
 
-setup airflow in gcp with cloud composer:
-laat menu zien
+in GCP navigate to 'Composer' via the 'hamburger' icon in the top left corner. 
 selecteer:
+click enable beta features and then select create.
+note: in this screen you also see a delete button with which you can delete the environment after usage in order to avoid unnecessary costs. 
 name, location, machine type (kies het meest eenvoudige), disk size (kies kleinste), python version 3.
+
+
 
 then wait a few minutes, after which you can drill down with the link. 
 
+pre installed packages, among others 
+
+	google-cloud-bigquery, google-cloud-dataflow, google-cloud-storage, pandas, pandas-gbq, tensorflow, kubernetes.
+
+Following the link DAGs folder you can upload your DAG file with .py extension. In this case the file in the DAG folder of this repository. 
 
 This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract data from some place 
 (public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load). 
