@@ -10,7 +10,7 @@ explained in https://cloud.google.com/storage/docs/access-control/making-data-pu
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
 *source: sensecorp.com*
-*This text is italicized*
+_This text is italicized__
 
 Generally the structure of an Airflow DAG consists of 5 parts:
 1. importing the modules and declaring variables
