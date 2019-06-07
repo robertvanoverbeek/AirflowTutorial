@@ -30,8 +30,15 @@ Then launch your Google cloud console (https://console.cloud.google.com), and na
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
 <br/>
 
-selecteer:
-click enable beta features and then select create.
+Then:
+* You may tick the box beta features to be able to use the latest functionalities;
+* Select 'CREATE'
+
+Then you will arrive at:
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="820" height="767">
+<br/>
+
+
 note: in this screen you also see a delete button with which you can delete the environment after usage in order to avoid unnecessary costs. 
 name, location, machine type (kies het meest eenvoudige), disk size (kies kleinste), python version 3.
 
@@ -59,8 +66,7 @@ explained in https://cloud.google.com/storage/docs/access-control/making-data-pu
 <br/>
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowvars.png" width="1084" height="214">
 <br/>
-<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="820" height="767">
-<br/>
+
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
 
