@@ -49,11 +49,20 @@ After a few minutes you will notice that the creation of the environment has bee
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="820" height="767">
 <br/>
 
-pre installed packages, among others 
+We note that the environment comes pre-installed with a number of Python packages, such as:
 
-	google-cloud-bigquery, google-cloud-dataflow, google-cloud-storage, pandas, pandas-gbq, tensorflow, kubernetes.
+Pandas, google-cloud-bigquery, google-cloud-dataflow, google-cloud-storage, Pandas-gbq, tensorflow and kubernetes.
+
+When you use the button 'PYPI PACKAGES' you will be able to select more Python packages (more information on: https://cloud.google.com/composer/docs/how-to/using/installing-python-dependencies).
+
+In the following paragraph I will explain how you can deploy the DAG of this repository.
 
 Following the link DAGs folder you can upload your DAG file with .py extension. In this case the file in the DAG folder of this repository. 
+
+#### 4. DAG structure and building a DAG
+	
+Explain about the DAG.
+what is asyclical graph. a pipeline.  Pipelines are designed as a directed acyclic graph by dividing a pipeline into tasks that can be executed independently. Then these tasks are combined logically as a graph.
 
 This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract data from some place 
 (public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load). 
@@ -73,11 +82,6 @@ explained in https://cloud.google.com/storage/docs/access-control/making-data-pu
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
 
-
-#### 4. DAG structure and building a DAG
-	
-Explain about the DAG.
-what is asyclical graph. a pipeline.  Pipelines are designed as a directed acyclic graph by dividing a pipeline into tasks that can be executed independently. Then these tasks are combined logically as a graph.
 
 
 Generally the structure of an Airflow DAG consists of 5 parts:
