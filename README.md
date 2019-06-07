@@ -7,15 +7,13 @@ I am writing this tutorial as a Data Scientist, while I believe many people woul
 
 * With the rise of Cloud providers like AWS, GCP and Azure, which offer a suite of offerings (storage, streaming, Apps, Web, ML), the traditional Data Science pyramid as shown below becomes increasingly vertically integrated. This makes it easier and faster to create end-to-end solutions in the cloud (e.g. https://aws.amazon.com/blogs/machine-learning/build-end-to-end-machine-learning-workflows-with-amazon-sagemaker-and-apache-airflow/);
 * If you, as a Data Scientist or an Engineer, are able to rapidly prototype a working Proof-Of-Concept, it then becomes easier to convince others within the company about the value that can be created. Even in case the company does have both Data Scientists and Data Engineers, either of the two might not be available at that time due to other priorities;
-* In ma
-
-
+* Many companies do not have the funds to hire teams of Data Scientists and Data Engineers. In fact most companies do not handle terabytes of data on a daily basis and/or streaming data (Big data), so data processing is often at a much smaller scale or slower.
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
 <sup>source: sensecorp.com</sup>
 <br/>
 
-
+#### 2. Advantages of working with Airflow
 
 
 voordelen behandelen versus cron jobs:
@@ -42,7 +40,7 @@ Airflow has limited support for Microsoft Azure: interfaces exist only for Azure
 
 https://github.com/apache/airflow/tree/master/airflow/contrib
 
-#### 2. Setting up the Airflow environment in GCP
+#### 3. Setting up the Airflow environment in GCP
 A prerequisite to this is that you have a google account (gmail account), with which you can launch Google Cloud Platform (GCP). GCP comes with $300,- free trial credit.
 
 in GCP navigate to 'Composer' via the 'hamburger' icon in the top left corner. 
@@ -81,6 +79,8 @@ explained in https://cloud.google.com/storage/docs/access-control/making-data-pu
 <br/>
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
 
+
+#### 4. DAG structure and building a DAG
 	
 Generally the structure of an Airflow DAG consists of 5 parts:
 1. importing the modules and declaring variables
