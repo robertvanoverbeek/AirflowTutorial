@@ -36,8 +36,8 @@ To create an environment:
 * You may tick the box beta features to be able to use the latest functionalities;
 * Select 'CREATE'
 
-In the screen that follows, it is very easy to set up a basic Airflow Environment. You fill in:
-* Name
+In the screen that follows, it is very easy to set up a basic Airflow Environment. Fill in:
+* A name for the environment;
 * Select a location closest to you. For instance europe-west1-d. Check https://cloud.google.com/compute/docs/regions-zones/ if you wnat to know more about server locations;
 * Machine type. For this tutorial you may choose the smallest configuration in terms of CPUs;
 * Disk size. At the time of writing the minumum is 20GB;
