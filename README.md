@@ -100,6 +100,7 @@ Behandel ook macros, zoals timedelta: info gebruiken van:
 https://diogoalexandrefranco.github.io/about-airflow-date-macros-ds-and-execution-date/
 en
 https://airflow.apache.org/macros.html
+Misschien beter om bij catchup=True ook 'depends_on_past': True te gebruiken, om te voorkomen dat er teveel taken tegelijk draaien. Ff testen.
 
 
 context managers and then
