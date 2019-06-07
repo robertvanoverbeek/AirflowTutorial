@@ -3,7 +3,7 @@
 #### 1. Introduction
 The aim of this Airflow tutorial is to explain the main principles of Airflow and to provide you with a hands-on working example to get you up to speed with Airflow as quickly as possible. Following the definition of Airflow, 'Airflow is a platform to programmatically author, schedule and monitor workflows. Airflow is not a data streaming solution. Tasks do not move data from one to the other (though tasks can exchange metadata!). Airflow is not in the Spark Streaming or Storm space, it is more comparable to Oozie or Azkaban'.
 
-I am writing this tutorial as a Data Scientist and I believe many people would say Airflow is a tool for Data Engineers to implement ETL processes. Though, for a number of reasons I believe that being able to perform some Data Engineering tasks as a Data Scientist is a valuable asset:
+I wrote this tutorial as a Data Scientist and I believe many people would say Airflow is a tool for Data Engineers to implement ETL processes. Though, for a number of reasons I believe that being able to perform some Data Engineering tasks as a Data Scientist is a valuable asset:
 
 * With the rise of Cloud providers like AWS, GCP and Azure, which offer a suite of offerings (storage, streaming, Apps, Web, ML), the traditional Data Science pyramid as shown below becomes increasingly vertically integrated. Artificial intelligence, Internet of things and analytics are the upsell technologies for cloud vendors. These movements make it easier and faster to create end-to-end solutions in the cloud, even for a small team or as a single person (e.g. https://aws.amazon.com/blogs/machine-learning/build-end-to-end-machine-learning-workflows-with-amazon-sagemaker-and-apache-airflow/);
 * If you, as a Data Scientist or an Engineer, are able to rapidly prototype a working Proof-Of-Concept, it then becomes easier to convince others within the company about the value that can be created. Even in case the company does have both Data Scientists and Data Engineers, either of the two might not be available at that time due to other priorities. This makes it a valuable asset to be able to do both;
@@ -14,31 +14,14 @@ I am writing this tutorial as a Data Scientist and I believe many people would s
 <br/>
 
 #### 2. Advantages of working with Airflow
-
-
-voordelen behandelen versus cron jobs:
-error handling, including upstream errors (dependencies)
-backfilling historical data
-monitoring / logging
-standard operators enabling connections to many other infrastructures
-
-with airflow in the cloud data engineers and data scientists don't waste much time on DevOps.
-
-integration in the cloud with big data, machine learning. 
-
-you can build end-to-end (ML) solutions in the cloud with Airflow in combination with the other cloud services. 
-
-
-what is asyclical graph. a pipeline.  Pipelines are designed as a directed acyclic graph by dividing a pipeline into tasks that can be executed independently. Then these tasks are combined logically as a graph.
-
-operators and sensors. 
-
-Databricks has contributed an Airflow operator which enables submitting runs to the Databricks platform.
-Airflow has extensive support for the Google Cloud Platform. But note that most Hooks and Operators are in the contrib section.
-Airflow has extensive support for Amazon Web Services. But note that the Hooks, Sensors and Operators are in the contrib section.
-Airflow has limited support for Microsoft Azure: interfaces exist only for Azure Blob Storage and Azure Data Lake. Hook, Sensor and Operator for Blob Storage and Azure Data Lake Hook are in contrib section.
-
-https://github.com/apache/airflow/tree/master/airflow/contrib
+Working with Airflow provides you with a number of advantages as opposed to for instance working with more traditional cron jobs:
+* It has good facilities with respect to error handling, including upstream errors (dependencies);
+* It facilitates backfilling of historical data;
+* Monitoring / logging facilities;
+* A large user group contributing by building standard operators, enabling connections to many other infrastructures;
+* Airflow has extensive support for AWS and GCP and to a lesser extent for Azure (Hook, Sensor and Operator for Blob Storage and Azure Data Lake), although Databricks that has been integrated in Azure has contributed an Airflow operator which enables submitting runs to the Databricks platform. Hooks, Sensors and Operators are in the contrib section (beta), which can be found at https://github.com/apache/airflow/tree/master/airflow/contrib;
+* Integration in the cloud with big data and machine learning. You can build end-to-end (ML) solutions in the cloud with Airflow in combination with the other cloud services;
+* Thanks to the above-mentioned advantages, data engineers and data scientists don't waste much time on DevOps.
 
 #### 3. Setting up the Airflow environment in GCP
 A prerequisite to this is that you have a google account (gmail account), with which you can launch Google Cloud Platform (GCP). GCP comes with $300,- free trial credit.
@@ -82,6 +65,10 @@ explained in https://cloud.google.com/storage/docs/access-control/making-data-pu
 
 #### 4. DAG structure and building a DAG
 	
+Explain about the DAG.
+what is asyclical graph. a pipeline.  Pipelines are designed as a directed acyclic graph by dividing a pipeline into tasks that can be executed independently. Then these tasks are combined logically as a graph.
+
+
 Generally the structure of an Airflow DAG consists of 5 parts:
 1. importing the modules and declaring variables
 2. default arguments
