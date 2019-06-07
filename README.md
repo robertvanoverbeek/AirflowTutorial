@@ -26,7 +26,10 @@ Working with Airflow provides you with a number of advantages as opposed to for 
 #### 3. Setting up the Airflow environment in GCP
 A prerequisite to setting up an Airflow environment in GCP is that you have a google account (gmail account), with which you can launch Google Cloud Platform (GCP). The nice thing of GCP is that it comes with a free $300,- trial credit.
 
-Then launch your Google cloud console (https://console.cloud.google.com), and navigate to 'Composer' via the 'hamburger' icon in the top left corner. 
+Then launch your Google cloud console (https://console.cloud.google.com), and navigate to 'Composer' via the 'hamburger' icon in the top left corner. You will then see the options as displayed in the following visual:
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
+<br/>
+
 selecteer:
 click enable beta features and then select create.
 note: in this screen you also see a delete button with which you can delete the environment after usage in order to avoid unnecessary costs. 
@@ -58,8 +61,7 @@ explained in https://cloud.google.com/storage/docs/access-control/making-data-pu
 <br/>
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="820" height="767">
 <br/>
-<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
-<br/>
+
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
 
 
@@ -93,6 +95,11 @@ To avoid this situation, it is advisable to use a single Airflow variable with J
 For instance this case, under Admin > variables in the UI we will save a key 'dag_xyz_config', with
 a a set (replace the values with your project ID and bucket name without the gs:// prefix, as we fill it in below):
 {"gcp_project": "ml-test-240115", "gcs_bucket": "airflowbucket_tst"}
+
+Behandel ook macros, zoals timedelta: info gebruiken van:
+https://diogoalexandrefranco.github.io/about-airflow-date-macros-ds-and-execution-date/
+en
+https://airflow.apache.org/macros.html
 
 
 context managers and then
