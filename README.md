@@ -1,7 +1,22 @@
 # Hands-on Airflow Tutorial using Google Cloud Composer
 
 #### 1. Introduction
-This tutorial is an introduction to 
+The aim of this Airflow tutorial is to explain the main principles of Airflow and to provide you with a hands-on working example to get you up to speed with Airflow as quickly as possible. Following the definition of Airflow, 'Airflow is a platform to programmatically author, schedule and monitor workflows. Airflow is not a data streaming solution. Tasks do not move data from one to the other (though tasks can exchange metadata!). Airflow is not in the Spark Streaming or Storm space, it is more comparable to Oozie or Azkaban'.
+
+I am writing this tutorial as a Data Scientist, while I believe many people would say Airflow is a tool for Data Engineers to implement ETL processes. Though, for a number of reasons I believe that being able to perform some Data Engineering tasks as a Data Scientist is a valuable asset:
+
+* With the rise of Cloud providers like AWS, GCP and Azure, which offer a suite of offerings (storage, streaming, Apps, Web, ML), the traditional Data Science pyramid as shown below becomes increasingly vertically integrated. This makes it easier and faster to create end-to-end solutions in the cloud (e.g. https://aws.amazon.com/blogs/machine-learning/build-end-to-end-machine-learning-workflows-with-amazon-sagemaker-and-apache-airflow/);
+* If you, as a Data Scientist or an Engineer, are able to rapidly prototype a working Proof-Of-Concept, it then becomes easier to convince others within the company about the value that can be created. Even in case the company does have both Data Scientists and Data Engineers, either of the two might not be available at that time due to other priorities;
+* In ma
+
+
+
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
+<sup>source: sensecorp.com</sup>
+<br/>
+
+
+
 
 voordelen behandelen versus cron jobs:
 error handling, including upstream errors (dependencies)
@@ -54,9 +69,7 @@ applied DAG below), as this makes securely accessing the data from Power BI easi
 We believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the data publicly available, which is
 explained in https://cloud.google.com/storage/docs/access-control/making-data-public
 
-<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
-<sup>source: sensecorp.com</sup>
-<br/>
+
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowgraphview.PNG" width="955" height="75">
 <br/>
