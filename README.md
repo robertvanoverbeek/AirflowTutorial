@@ -30,21 +30,24 @@ Then launch your Google cloud console (https://console.cloud.google.com), and na
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
 <br/>
 
-Then:
+One note beforehand: in this screen you see a delete button with which you can delete the environment after usage in order to avoid unnecessary costs!
+
+To create an environment:
 * You may tick the box beta features to be able to use the latest functionalities;
 * Select 'CREATE'
 
-Then you will arrive at:
+In the screen that follows, it is very easy to set up a basic Airflow Environment. You fill in:
+* Name
+* Select a location closest to you. For instance europe-west1-d. Check https://cloud.google.com/compute/docs/regions-zones/ if you wnat to know more about server locations;
+* Machine type. For this tutorial you may choose the smallest configuration in terms of CPUs;
+* Disk size. At the time of writing the minumum is 20GB;
+* Python version. Select Python version 3.
+* Lastly click 'CREATE'.
+
+After a few minutes you will notice that the creation of the environment has been completed. You will then be able to drill down on it using the link, where you will find the following screen (the option 'node configuration' will become visible if you click 'EDIT'):
+
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="820" height="767">
 <br/>
-
-
-note: in this screen you also see a delete button with which you can delete the environment after usage in order to avoid unnecessary costs. 
-name, location, machine type (kies het meest eenvoudige), disk size (kies kleinste), python version 3.
-
-
-
-then wait a few minutes, after which you can drill down with the link. 
 
 pre installed packages, among others 
 
