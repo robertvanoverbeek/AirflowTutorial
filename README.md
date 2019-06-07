@@ -24,9 +24,9 @@ Working with Airflow provides you with a number of advantages as opposed to for 
 * Thanks to the above-mentioned advantages, data engineers and data scientists don't waste much time on DevOps.
 
 #### 3. Setting up the Airflow environment in GCP
-A prerequisite to this is that you have a google account (gmail account), with which you can launch Google Cloud Platform (GCP). GCP comes with $300,- free trial credit.
+A prerequisite to setting up an Airflow environment in GCP is that you have a google account (gmail account), with which you can launch Google Cloud Platform (GCP). The nice thing of GCP is that it comes with a free $300,- trial credit.
 
-in GCP navigate to 'Composer' via the 'hamburger' icon in the top left corner. 
+Then launch your Google cloud console (https://console.cloud.google.com), and navigate to 'Composer' via the 'hamburger' icon in the top left corner. 
 selecteer:
 click enable beta features and then select create.
 note: in this screen you also see a delete button with which you can delete the environment after usage in order to avoid unnecessary costs. 
