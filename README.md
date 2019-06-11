@@ -112,27 +112,6 @@ To avoid this situation, it is advisable to use a single Airflow variable with J
 For instance this case, under Admin > variables in the UI we will save a key 'dag_xyz_config', with
 a a set (replace the values with your project ID and bucket name without the gs:// prefix, as we fill it in below):
 
-##### 4.2 Default arguments
-lfdsaj
-##### 4.3 Instantiation of the DAG
-lfdsaj
-##### 4.4 The tasks
-lfdsaj
-##### 4.5 Dependencies / order of the flow
-
-
-
-<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowvars.png" width="1084" height="214">
-<br/>
-
-
-<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
-
-
-
-
-In the code below I will reference to these steps.
-
 For this DAG you need to save key-value pairs in Airflow (via Admin > Variables) for the following items:
 * gcp_project - Your Google Cloud Project ID.
 * gcs_bucket - The Google Cloud Storage bucket to save the output file to. This also implies you have created such a bucket.
@@ -155,16 +134,23 @@ en
 https://airflow.apache.org/macros.html
 Misschien beter om bij catchup=True ook 'depends_on_past': True te gebruiken, om te voorkomen dat er teveel taken tegelijk draaien. Ff testen.
 
+##### 4.2 Default arguments
+lfdsaj
+##### 4.3 Instantiation of the DAG
+lfdsaj
+##### 4.4 The tasks
+lfdsaj
+##### 4.5 Dependencies / order of the flow
 
-context managers and then
 
 
-step 5/5 Define DAG dependencies / defining the order of the tasks
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowvars.png" width="1084" height="214">
+<br/>
 
-```
-docker run hello-world 
-```
-to verify that Docker can pull and run images.
+
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
+
+
 
 
 
