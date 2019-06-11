@@ -99,6 +99,7 @@ min_query_date = '{{ (execution_date - macros.timedelta(days=7)).strftime("%Y-%m
 ```
 First of all the script imports some basic Python datetime functions, which are useful for scheduling the DAG and querying data with date and time stamps.
 We import DAG (object), which we will need to instantiate a DAG.
+We import 'models' to be able to import the centrally stored variables, which I will explain below.
 We then import two operators from 'contrib'. I already briefly mentioned contrib with a link in chapter 2, but under 'contrib' in the Github repository of Airflow you can find standard connectors. The names we use here almost speak for themselves: 'bigquery_operator' to execute queries on BigQuery and 'bigquery_to_gcs' to store BigQuery data in Google Cloud Storage. 
 We also import 'bash_operator' to be able to execute bash commands. Airflow provides operators for many common tasks, including ():
 
@@ -118,45 +119,23 @@ We also import 'trigger_rule'. All operators have a trigger_rule argument which 
 * all_done: all parents are done with their execution;
 * etc. etc. Look for 'Trigger Rules' on https://airflow.apache.org/concepts.html
 
+For some static variables, like references to project names and storage locations, it can be useful to separate them from the code itself. This is also very useful if you apply the variables to multiple DAG files. Then, if you then need to change the variable you only have to change it in a single location. With  the code: 
+```
+dag_vars = models.Variable.get("dag_xyz_config", deserialize_json=True)
+```
+we define the variable 'dag_vars' and retrieve a set of centrally stored variables (JSON, in this case under the name 'dag_xyz_config') with a single command. This is better than retrieving every variable separately. Airflow Variables are stored in Metadata Database, so any call to variables means a connection to Metadata DB. Your DAG files are parsed every X seconds. If you use a large number of variable in your DAG could mean you might end up saturating the number of allowed connections to your database.
 
-
-
-
-There are also other modules possible!
-
-
-Before we upload the DAG file, we are referencing the centrally stored variables.
-
-
-For some static variables, like references to project names and storage locations,
-it can be useful to separate them from the code itself. This is also very useful if you
-apply the variables to multiple DAG files. Then, if you then need to change the variable you only
-have to change it in a single location.
-Airflow Variables are stored in Metadata Database, so any call to variables would mean a connection to Metadata DB.
-Your DAG files are parsed every X seconds. If you use a large number of variable in your DAG could mean you might end
-up saturating the number of allowed connections to your database.
-To avoid this situation, it is advisable to use a single Airflow variable with JSON value.
-For instance this case, under Admin > variables in the UI we will save a key 'dag_xyz_config', with
-a a set (replace the values with your project ID and bucket name without the gs:// prefix, as we fill it in below):
-
-For this DAG you need to save key-value pairs in Airflow (via Admin > Variables) for the following items:
-* gcp_project - Your Google Cloud Project ID.
-* gcs_bucket - The Google Cloud Storage bucket to save the output file to. This also implies you have created such a bucket.
-In the code below, at step 1, I will explain how to implement the variables.
-Check https://airflow.apache.org/concepts.html#variables if you want more information about Airflow variables.
+In this case, in the UI, under Admin > variables we have to save a key 'dag_xyz_config', with
+a a set (replace the values with your Your Google Cloud Project ID and a bucket name without the gs:// prefix):
+```
+{"gcp_project": "ml-test-240115", "gcs_bucket": "airflowbucket_tst"}
+```
+As shown in the screen dump below:
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowvars.png" width="1084" height="214">
+<br/>
 Check https://cloud.google.com/storage/docs/creating-buckets if you need more information on creating a gcp bucket,
 as this is beyond the scope of this Airflow POC example.
 
-Airflow Variables are stored in Metadata Database, so any call to variables would mean a connection to Metadata DB.
-Your DAG files are parsed every X seconds. If you use a large number of variable in your DAG could mean you might end
-up saturating the number of allowed connections to your database.
-To avoid this situation, it is advisable to use a single Airflow variable with JSON value.
-For instance this case, under Admin > variables in the UI I will save a key 'dag_xyz_config', with
-a a set (replace the values with your project ID and bucket name without the gs:// prefix, as I fill it in below):
-{"gcp_project": "ml-test-240115", "gcs_bucket": "airflowbucket_tst"}
-
-<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowvars.png" width="1084" height="214">
-<br/>
 
 Behandel ook macros, zoals timedelta: info gebruiken van:
 https://diogoalexandrefranco.github.io/about-airflow-date-macros-ds-and-execution-date/
