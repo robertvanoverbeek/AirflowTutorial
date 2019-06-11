@@ -183,7 +183,7 @@ t1_make_bq_dataset >> t2_bq_recent_questions_query >> t3_export_questions_to_gcs
 ```
 ### 5. Deploying a DAG and checking the logs
 
-lalala
+Upload the .py file which contains the DAG script.
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
 
