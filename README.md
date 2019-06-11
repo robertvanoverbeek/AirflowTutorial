@@ -214,8 +214,8 @@ In the last part of the DAG we define the dependencies. In this case we want tas
 ```
 t1_make_bq_dataset >> t2_bq_recent_questions_query >> t3_export_questions_to_gcs  >> t4_delete_bq_dataset
 ```
-The result of this can be seen in figure 4. You can see this 'Graph View' by using the link 'Airflow Web UI' as displayed in figure 3.
-It is also possible to specify this in a different format, as explained on (https://airflow.apache.org/tutorial.html#setting-up-dependencies). For instance with:
+The result of this can be seen in figure 4. You can see this 'Graph View' by using the link 'Airflow Web UI', as displayed in figure 3, and then use the button 'Graph View'. 
+It is also possible to specify the dependencies in a different format, as explained on (https://airflow.apache.org/tutorial.html#setting-up-dependencies). For instance with:
 
 ```
 t1_make_bq_dataset << t2_bq_recent_questions_query << t3_export_questions_to_gcs  << t4_delete_bq_dataset
