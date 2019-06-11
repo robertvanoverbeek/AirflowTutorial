@@ -55,7 +55,7 @@ When you use the button 'PYPI PACKAGES' you will be able to select more Python p
 
 In order to deploy a DAG file, drill down on the link DAGs folder. In the following paragraph I will explain how you can deploy the DAG of this repository (contained in the DAG folder of this repository). 
 
-#### 4. DAG structure and building and deploying a DAG
+#### 4. DAG structure and building a DAG
 	
 With Airflow you can deploy DAGs, which stands for Directed Acyclic graph. This is a finite directed graph with no directed cycles. So it always goes in one direction and does not form a circle. The simple DAG for this tutorial is shown below: 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowgraphview.PNG" width="955" height="75">
@@ -128,6 +128,9 @@ For instance this case, under Admin > variables in the UI I will save a key 'dag
 a a set (replace the values with your project ID and bucket name without the gs:// prefix, as I fill it in below):
 {"gcp_project": "ml-test-240115", "gcs_bucket": "airflowbucket_tst"}
 
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowvars.png" width="1084" height="214">
+<br/>
+
 Behandel ook macros, zoals timedelta: info gebruiken van:
 https://diogoalexandrefranco.github.io/about-airflow-date-macros-ds-and-execution-date/
 en
@@ -143,10 +146,9 @@ lfdsaj
 ##### 4.5 Dependencies / order of the flow
 
 
+#### 5. Deploying a DAG
 
-<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowvars.png" width="1084" height="214">
-<br/>
-
+fdslfdsj
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
 
