@@ -62,8 +62,61 @@ With Airflow you can deploy DAGs, which stands for Directed Acyclic graph. This 
 <br/>
 This DAG script of this tutorial demonstrates the usage of Airflow in an ETL process. In this case it periodically Extracts data from some place(public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load). From there it can be made available as data source for i.g. reporting (e.g. very simple with Google's Data Studio) and/or Machine Learning. Side note: If you want to use Power BI in combination with GCP it is better to store and leave the data in BigQuery (which is also a step in the DAG of this tutorial), as this makes securely accessing the data from Power BI easier with the standard BigQuery connector in Power BI. I believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the data publicly available, which step is explained in https://cloud.google.com/storage/docs/access-control/making-data-public.
 
+While our DAG is quite simple in terms of processes it posesses some extra features that also highlight some functionalities of Airflow:
+* Centrally strored variables;
+* Backfilling of historical data;
+* The usage of Macros and Jinja Templating.
+
+Generally the structure of an Airflow DAG consists of 5 parts:
+1. Importing the modules and declaring variables, including referencing the centrally stored variables;
+2. Default arguments;
+3. Instantiation of the DAG;
+4. The tasks;
+5. Dependencies / order of the flow.
+
+I will explain these five steps using our DAG as an example.
+
+##### 4.1 Modules and variables
+The code that is part of this step contains amongst other things:
+```
+from datetime import date, datetime, timedelta
+from airflow import DAG
+from airflow import models
+from airflow.contrib.operators import bigquery_get_data
+from airflow.contrib.operators import bigquery_operator
+from airflow.contrib.operators import bigquery_to_gcs
+from airflow.operators import bash_operator
+from airflow.utils import trigger_rule
+
+dag_vars = models.Variable.get("dag_xyz_config", deserialize_json=True)
+gcp_project_name = dag_vars["gcp_project"]
+gcs_bucket_name = dag_vars["gcs_bucket"]
+
+max_query_date = '{{ (execution_date - macros.timedelta(days=1)).strftime("%Y-%m-%d") }}'
+min_query_date = '{{ (execution_date - macros.timedelta(days=7)).strftime("%Y-%m-%d") }}'
+```
+
+Before we upload the DAG file, we are referencing the centrally stored variables.
 
 
+For some static variables, like references to project names and storage locations,
+it can be useful to separate them from the code itself. This is also very useful if you
+apply the variables to multiple DAG files. Then, if you then need to change the variable you only
+have to change it in a single location.
+Airflow Variables are stored in Metadata Database, so any call to variables would mean a connection to Metadata DB.
+Your DAG files are parsed every X seconds. If you use a large number of variable in your DAG could mean you might end
+up saturating the number of allowed connections to your database.
+To avoid this situation, it is advisable to use a single Airflow variable with JSON value.
+For instance this case, under Admin > variables in the UI we will save a key 'dag_xyz_config', with
+a a set (replace the values with your project ID and bucket name without the gs:// prefix, as we fill it in below):
+
+##### 4.2 Default arguments
+lfdsaj
+##### 4.3 Instantiation of the DAG
+lfdsaj
+##### 4.4 The tasks
+lfdsaj
+##### 4.5 Dependencies / order of the flow
 
 
 
@@ -75,12 +128,6 @@ This DAG script of this tutorial demonstrates the usage of Airflow in an ETL pro
 
 
 
-Generally the structure of an Airflow DAG consists of 5 parts:
-1. importing the modules and declaring variables
-2. default arguments
-3. instantiation of the DAG
-4. the tasks
-5. dependencies / order
 
 In the code below I will reference to these steps.
 
