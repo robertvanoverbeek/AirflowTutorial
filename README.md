@@ -53,7 +53,7 @@ Pandas, google-cloud-bigquery, google-cloud-dataflow, google-cloud-storage, Pand
 
 When you use the button 'PYPI PACKAGES' you will be able to select more Python packages (more information on: https://cloud.google.com/composer/docs/how-to/using/installing-python-dependencies).
 
-In order to deploy a DAG file, drill down on the link DAGs folder. In the following paragraph I will explain how you can deploy the DAG of this repository (contained in the DAG folder of this repository). 
+In order to deploy a DAG file, drill down on the link DAGs folder. In chapter 5 I will explain how you can deploy the DAG of this repository (contained in the DAG folder of this repository), but before that I will explain the structure of this DAG and how to build one in chapter 4.
 
 #### 4. DAG structure and building a DAG
 	
@@ -144,11 +144,11 @@ lfdsaj
 ##### 4.4 The tasks
 lfdsaj
 ##### 4.5 Dependencies / order of the flow
-
+lala
 
 #### 5. Deploying a DAG
 
-fdslfdsj
+lalala
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
 
