@@ -161,6 +161,9 @@ default_dag_args = {
     'project_id': gcp_project_name
 }
 ```
+To create email notification you will have to set up a SMTP server on the platform. In GCP you can create this as explained on https://cloud.google.com/composer/docs/how-to/managing/creating#notification. This uses SendGrid as provider with which you are allowed to send 12,000 mails per month for free (at time of writing). I believe SendGrid can also be used on AWs.
+
+
 #### 4.3 Instantiation of the DAG
 lfdsaj
 ```
@@ -171,6 +174,16 @@ with DAG(
     catchup=True
     ) as dag:
 ```
+Otherwise:
+```
+dag = DAG(
+    'bigquery_github_trends',
+    default_args=default_args,
+    schedule_interval=schedule_interval
+    )
+```
+and then make a reference to 'dag' within each task by stating dag=dag.
+
 #### 4.4 The tasks
 lfdsaj
 ```
