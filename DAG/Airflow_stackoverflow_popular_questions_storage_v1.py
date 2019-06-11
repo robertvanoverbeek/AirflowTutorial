@@ -46,7 +46,7 @@ up saturating the number of allowed connections to your database.
 To avoid this situation, it is advisable to use a single Airflow variable with JSON value.
 For instance this case, under Admin > variables in the UI we will save a key 'dag_xyz_config', with
 a a set (replace the values with your project ID and bucket name without the gs:// prefix, as we fill it in below):
-{"gcp_project": "ml-test-240115", "gcs_bucket": "airflowbucket_tst"}
+{"gcp_project": "ml-test-xyz", "gcs_bucket": "airflowbucket_tst"}
 """
 dag_vars = models.Variable.get("dag_xyz_config", deserialize_json=True)
 gcp_project_name = dag_vars["gcp_project"]
