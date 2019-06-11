@@ -28,7 +28,6 @@ Within your Google Account launch your Google cloud console (https://console.clo
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
 <br/>
-
 One note beforehand: in this screen you see a delete button with which you can delete the environment after usage in order to avoid unnecessary costs!
 
 To create an environment:
