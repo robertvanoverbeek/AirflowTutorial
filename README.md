@@ -6,15 +6,14 @@ The aim of this Airflow tutorial is to explain the main principles of Airflow an
 I wrote this tutorial as a Data Scientist and I believe many people would say Airflow is a tool for Data Engineers to implement ETL processes. Though, for a number of reasons I believe that being able to perform some Data Engineering tasks as a Data Scientist is a valuable asset:
 
 * With the rise of Cloud providers like AWS, GCP and Azure, which offer a suite of offerings (storage, streaming, Apps, Web, ML), the traditional Data Science pyramid as shown below becomes increasingly vertically integrated. These movements make it easier and faster to create end-to-end solutions in the cloud, even for a small team or as a single person (e.g. https://aws.amazon.com/blogs/machine-learning/build-end-to-end-machine-learning-workflows-with-amazon-sagemaker-and-apache-airflow/). Artificial intelligence, Internet of things and analytics are the upsell technologies for cloud vendors;
-* If you, as a Data Scientist or an Engineer, are able to rapidly prototype a working Proof-Of-Concept, it then becomes easier to convince others within the company about the value that can be created. Even in case the company does have both Data Scientists and Data Engineers, either of the two might not be available at that time due to other priorities. This makes it a valuable asset to be able to do both;
-* Many companies do not have the funds to hire teams of Data Scientists and Data Engineers. In fact most companies do not handle terabytes of data on a daily basis and/or streaming data (Big data), so data processing is often at a much smaller scale or slower.
+* Quite often companies do not have dedicated DS an DE teams, as most companies do not handle terabytes of data on a daily basis and/or streaming data (Big data). Even if they have both, either of the two might not be available at that time due to other priorities. This makes it a valuable asset to be able to do work on both. Besides, if you, as a Data Scientist or an Engineer, are able to rapidly prototype a working Proof-Of-Concept (most likely involving both DE and DS work), it then becomes easier to convince others within the company about the value that can be created.
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
 <sup>source: sensecorp.com</sup>
 <br/>
 
 #### 2. Advantages of working with Airflow
-Working with Airflow provides you with a number of advantages as opposed to for instance working with more traditional cron jobs:
+Working with Airflow provides you with a number of advantages as opposed to working with e.g. traditional cron jobs:
 * It has good facilities with respect to error handling, including upstream errors (dependencies);
 * It facilitates backfilling of historical data;
 * Monitoring / logging facilities;
