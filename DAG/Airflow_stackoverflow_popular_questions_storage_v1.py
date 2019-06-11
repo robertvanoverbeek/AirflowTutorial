@@ -1,12 +1,7 @@
 """
-This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract data from some place 
-(public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) 
-as csv file (Load). From there it can be made available as data source for i.g. reporting, for instance for the creation of 
-a (Data Studio) dashboard. As a side note to this: If you use Power BI in combination with GCP (Google Cloud Platform) 
-it is better to store and leave the data in BigQuery (which is a step in the applied DAG below), as this makes securely 
-accessing the data from Power BI easier with the standard BigQuery connector in Power BI.
-We believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the data publicly available, which is
-explained in https://cloud.google.com/storage/docs/access-control/making-data-public
+This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract data from some place
+(public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load).
+From there it can be made available as data source for e.g. reporting or ML.
 
 Generally the structure of an Airflow DAG consists of 5 parts:
 1. importing the modules and declaring variables
@@ -31,9 +26,9 @@ In the above-mentioned github repo you can also find more examples.
 
 # step 1/5, importing modules and declaring variables
 from datetime import date, datetime, timedelta
+# from airflow import macros
 from airflow import DAG
 from airflow import models
-from airflow.contrib.operators import bigquery_get_data
 from airflow.contrib.operators import bigquery_operator
 from airflow.contrib.operators import bigquery_to_gcs
 from airflow.operators import bash_operator
@@ -51,7 +46,7 @@ up saturating the number of allowed connections to your database.
 To avoid this situation, it is advisable to use a single Airflow variable with JSON value.
 For instance this case, under Admin > variables in the UI we will save a key 'dag_xyz_config', with
 a a set (replace the values with your project ID and bucket name without the gs:// prefix, as we fill it in below):
-{"gcp_project": "ml-test-1234567", "gcs_bucket": "airflowbucket_tst"}
+{"gcp_project": "ml-test-240115", "gcs_bucket": "airflowbucket_tst"}
 """
 dag_vars = models.Variable.get("dag_xyz_config", deserialize_json=True)
 gcp_project_name = dag_vars["gcp_project"]
@@ -62,35 +57,43 @@ bq_dataset_name = 'airflow_bq_dataset_{{ ds_nodash }}'
 bq_recent_questions_table = bq_dataset_name + '.recent_questions'
 bq_most_popular_table_name = 'most_popular'
 bq_most_popular_table_id = bq_dataset_name + '.' + bq_most_popular_table_name
-output_file = 'gs://{gcs_bucket}/recent_questions.csv'.format(gcs_bucket=gcs_bucket_name)
+output_file = 'gs://{gcs_bucket}/recent_questions_{datestamp}.csv'.format(gcs_bucket=gcs_bucket_name, datestamp = '{{ ds_nodash }}')
 
-"""
-Setting the query dates:
-You may change the query dates to get data from a different time range. You
-may also dynamically pick a date range based on DAG schedule date. Airflow
-macros can be used. For example, {{ macros.ds_add(ds, -7) }}
-corresponds to a date 7 days before the DAG was run.
-"""
-lastday_five_months_back = (((((date.today().replace(day=1) + timedelta(days=-1)).replace(day=1) +
+
+# define the best start and end dates:
+# we look minimum 3 months back because the public dataset is not updated very frequently
+firstday_five_months_back = ((((((date.today().replace(day=1) + timedelta(days=-1)).replace(day=1) +
                          timedelta(days=-1)).replace(day=1) + timedelta(days=-1)).replace(day=1)) +
-                            timedelta(days=-1)).replace(day=1) + timedelta(days=-1)
-# in this case we take a short time window of only one week.
-# we look five months back because the public dataset is not updated very frequently
-mindate = lastday_five_months_back + timedelta(days=-6)
-max_query_date = lastday_five_months_back.strftime("%Y-%m-%d")
-min_query_date = mindate.strftime("%Y-%m-%d")
+                            timedelta(days=-1)).replace(day=1) + timedelta(days=-1)).replace(day=1)
+firstday_three_months_back = ((((date.today().replace(day=1) + timedelta(days=-1)).replace(day=1) +
+                         timedelta(days=-1)).replace(day=1) + timedelta(days=-1)).replace(day=1))
+"""
+Setting the query window:
+in this case we take a short time window of only one week.
+We use Airflow macros, using Jinja template to look 7 days back from the run dates.
+{{ macros.ds_add(ds, -7) }} corresponds to a date 7 days before the DAG was run.
+More info: https://airflow.apache.org/macros.html and / or https://diogoalexandrefranco.github.io/about-airflow-date-macros-ds-and-execution-date/
+"""
+max_query_date = '{{ (execution_date - macros.timedelta(days=1)).strftime("%Y-%m-%d") }}'
+min_query_date = '{{ (execution_date - macros.timedelta(days=7)).strftime("%Y-%m-%d") }}'
 
 # step 2/5, default arguments, which are passed on to all tasks via the instatiated dag in the following step:
 default_dag_args = {
-    'start_date': datetime(2019, 1, 1),
-    # Email whenever an Operator in the DAG fails.
-    'depends_on_past': False,
+     # note the addition of time to the date, without which it will return an error.
+     # you can also use the datetime function, for instance: datetime(2019, 1, 1)
+    'start_date': datetime.combine(firstday_five_months_back, datetime.min.time()),
+    'end_date': datetime.combine(firstday_three_months_back, datetime.min.time()),
+     # in case you want backfill (called catchup), determined in step 3, I noticed it is best to select True for depends on the past.
+     # this will make jobs running in sequence instead of simultaneously, creating risks for errors with low cpu in this test case.
+    'depends_on_past': True,
     'email': 'bla@bla.com',
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
     'retry_delay': timedelta(minutes=3),
     'project_id': gcp_project_name
+    # Note, in this DAG project_id is only used in one task (t2), so instead of declaring it here, we could have added the following
+    # parameter line at task 2: project_id = gcp_project_name.
 }
 
 """
@@ -101,14 +104,13 @@ check https://airflow.apache.org/concepts.html for more information.
 """
 with DAG(
      # name of the DAG:
-    'popular_stackoverflow_questions_version1',
+    'popular_stackoverflow_questions_v1',
     default_args=default_dag_args,
 
     # scheduler interval. You can use cron notation or use
     # preset intervals (https://airflow.apache.org/scheduler.html)
-    # In this case we apply 4AM of every first day of the month
-    schedule_interval='0 4 1 * *',
-    catchup=False
+    schedule_interval='@monthly',
+    catchup=True
     ) as dag:
 
     # Create BigQuery output dataset.
@@ -135,6 +137,8 @@ with DAG(
     t3_export_questions_to_gcs = bigquery_to_gcs.BigQueryToCloudStorageOperator(
         task_id='export_recent_questions_to_gcs',
         source_project_dataset_table=bq_recent_questions_table,
+        # note: in https://github.com/apache/airflow/blob/master/airflow/contrib/operators/bigquery_to_gcs.py you can see that
+        # the type of 'destination_cloud_storage_uris' is list.
         destination_cloud_storage_uris=[output_file],
         export_format='CSV')
 
@@ -142,7 +146,8 @@ with DAG(
     t4_delete_bq_dataset = bash_operator.BashOperator(
         task_id='delete_bq_dataset',
         bash_command='bq rm -r -f %s' % bq_dataset_name,
-        trigger_rule=trigger_rule.TriggerRule.ALL_DONE)
+        # ALL_SUCCESS must be capital
+        trigger_rule=trigger_rule.TriggerRule.ALL_SUCCESS)
 
     # step 5/5 Define DAG dependencies / defining the order of the tasks
     t1_make_bq_dataset >> t2_bq_recent_questions_query >> t3_export_questions_to_gcs  >> t4_delete_bq_dataset
