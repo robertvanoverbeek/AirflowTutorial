@@ -152,7 +152,7 @@ lfdsaj
 #### 4.5 Dependencies / order of the flow
 lala
 
-#### 5. Deploying a DAG and checking the logs
+### 5. Deploying a DAG and checking the logs
 
 lalala
 
