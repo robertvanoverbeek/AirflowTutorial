@@ -8,7 +8,7 @@ I wrote this tutorial as a Data Scientist and I believe many people would say Ai
 * With the rise of Cloud providers like AWS, GCP and Azure, which offer a suite of offerings (storage, streaming, Apps, Web, ML), the traditional Data Science pyramid as shown below becomes increasingly vertically integrated. These movements make it easier and faster to create end-to-end solutions in the cloud, even for a small team or as a single person (e.g. https://aws.amazon.com/blogs/machine-learning/build-end-to-end-machine-learning-workflows-with-amazon-sagemaker-and-apache-airflow/). Artificial intelligence, Internet of things and analytics are the upsell technologies for cloud vendors;
 * Quite often companies do not have dedicated DS an DE teams, as most companies do not handle terabytes of data daily and/or streaming data (Big data). Even if they have both, either of the two might not be available at that time due to other priorities. This makes it an asset to be able to do work on both. Besides, if you, as a Data Scientist or an Engineer, can prototype a working Proof-Of-Concept (most likely involving both DE and DS work), it then becomes easier to convince others within the company about the value that can be created.
 
-<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
+<img="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
 <sup>figure 1. Source: sensecorp.com</sup>
 <br/>
 
@@ -61,6 +61,7 @@ In order to deploy a DAG file, drill down on the link DAGs folder. In chapter 5 
 ### 4. DAG structure and building a DAG
 With Airflow you can deploy DAGs, which stands for Directed Acyclic graph. This is a finite directed graph with no directed cycles. So it always goes in one direction and does not form a circle. The simple DAG for this tutorial is shown below: 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowgraphview.PNG" width="955" height="75">
+<sup>figure 4. Airflow Graph view</sup>
 <br/>
 This DAG script of this tutorial demonstrates the usage of Airflow in an ETL process. In this case it periodically Extracts data from some place (public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load). From there it can be made available as data source for e.g. reporting (e.g. very simple with Google's Data Studio) and/or Machine Learning. Side note: If you want to use Power BI in combination with GCP it is better to store and leave the data in BigQuery (which is also a step in the DAG of this tutorial), as this makes securely accessing the data from Power BI easier with the standard BigQuery connector in Power BI. I believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the data publicly available, which step is explained in https://cloud.google.com/storage/docs/access-control/making-data-public.
 
