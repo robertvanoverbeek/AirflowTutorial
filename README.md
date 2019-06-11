@@ -3,10 +3,10 @@
 ### 1. Introduction
 The aim of this Airflow tutorial is to explain the main principles of Airflow and to provide you with a hands-on working example to get you up to speed with Airflow. Following the definition of Airflow, 'Airflow is a platform to programmatically author, schedule and monitor workflows. Airflow is not a data streaming solution.
 
-I wrote this tutorial as a Data Scientist and I believe many people would say Airflow is a tool for Data Engineers to implement ETL processes. Though, for a number of reasons I believe that being able to perform some Data Engineering tasks as a Data Scientist is a valuable asset:
+I wrote this tutorial as a Data Scientist and I believe many people would say Airflow is a tool for Data Engineers to implement ETL processes. Though, for several reasons I believe that being able to perform some Data Engineering tasks as a Data Scientist is a valuable asset:
 
 * With the rise of Cloud providers like AWS, GCP and Azure, which offer a suite of offerings (storage, streaming, Apps, Web, ML), the traditional Data Science pyramid as shown below becomes increasingly vertically integrated. These movements make it easier and faster to create end-to-end solutions in the cloud, even for a small team or as a single person (e.g. https://aws.amazon.com/blogs/machine-learning/build-end-to-end-machine-learning-workflows-with-amazon-sagemaker-and-apache-airflow/). Artificial intelligence, Internet of things and analytics are the upsell technologies for cloud vendors;
-* Quite often companies do not have dedicated DS an DE teams, as most companies do not handle terabytes of data on a daily basis and/or streaming data (Big data). Even if they have both, either of the two might not be available at that time due to other priorities. This makes it a valuable asset to be able to do work on both. Besides, if you, as a Data Scientist or an Engineer, are able to rapidly prototype a working Proof-Of-Concept (most likely involving both DE and DS work), it then becomes easier to convince others within the company about the value that can be created.
+* Quite often companies do not have dedicated DS an DE teams, as most companies do not handle terabytes of data daily and/or streaming data (Big data). Even if they have both, either of the two might not be available at that time due to other priorities. This makes it an asset to be able to do work on both. Besides, if you, as a Data Scientist or an Engineer, can prototype a working Proof-Of-Concept (most likely involving both DE and DS work), it then becomes easier to convince others within the company about the value that can be created.
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
 <sup>source: sensecorp.com</sup>
@@ -37,9 +37,9 @@ To create an environment:
 
 In the screen that follows, it is very easy to set up a basic Airflow Environment. Fill in:
 * A name for the environment;
-* Select a location closest to you. For instance europe-west1-d. Check https://cloud.google.com/compute/docs/regions-zones/ if you wnat to know more about server locations;
+* Select a location closest to you. For instance europe-west1-d. Check https://cloud.google.com/compute/docs/regions-zones/ if you want to know more about server locations;
 * Machine type. For this tutorial you may choose the smallest configuration in terms of CPUs;
-* Disk size. At the time of writing the minumum is 20GB;
+* Disk size. At the time of writing the minimum is 20GB;
 * Python version. Select Python version 3.
 * Lastly click 'CREATE'.
 
@@ -60,15 +60,15 @@ In order to deploy a DAG file, drill down on the link DAGs folder. In chapter 5 
 With Airflow you can deploy DAGs, which stands for Directed Acyclic graph. This is a finite directed graph with no directed cycles. So it always goes in one direction and does not form a circle. The simple DAG for this tutorial is shown below: 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowgraphview.PNG" width="955" height="75">
 <br/>
-This DAG script of this tutorial demonstrates the usage of Airflow in an ETL process. In this case it periodically Extracts data from some place(public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load). From there it can be made available as data source for i.g. reporting (e.g. very simple with Google's Data Studio) and/or Machine Learning. Side note: If you want to use Power BI in combination with GCP it is better to store and leave the data in BigQuery (which is also a step in the DAG of this tutorial), as this makes securely accessing the data from Power BI easier with the standard BigQuery connector in Power BI. I believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the data publicly available, which step is explained in https://cloud.google.com/storage/docs/access-control/making-data-public.
+This DAG script of this tutorial demonstrates the usage of Airflow in an ETL process. In this case it periodically Extracts data from some place (public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load). From there it can be made available as data source for e.g. reporting (e.g. very simple with Google's Data Studio) and/or Machine Learning. Side note: If you want to use Power BI in combination with GCP it is better to store and leave the data in BigQuery (which is also a step in the DAG of this tutorial), as this makes securely accessing the data from Power BI easier with the standard BigQuery connector in Power BI. I believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the data publicly available, which step is explained in https://cloud.google.com/storage/docs/access-control/making-data-public.
 
-While our DAG is quite simple in terms of processes it posesses some extra features that also highlight some functionalities of Airflow:
-* Centrally strored variables;
+While our DAG is quite simple in terms of processes it possesses some extra features that also highlight some functionalities of Airflow:
+* Centrally stored variables;
 * The usage of Macros and Jinja Templating;
 * Backfilling of historical data;
 * Use a DAG as context managers.
 
-Generally the structure of an Airflow DAG consists of 5 parts:
+Generally, the structure of an Airflow DAG consists of 5 parts:
 1. Importing the modules and declaring variables, including referencing the centrally stored variables;
 2. Default arguments;
 3. Instantiation of the DAG;
@@ -96,7 +96,7 @@ gcs_bucket_name = dag_vars["gcs_bucket"]
 max_query_date = '{{ (execution_date - macros.timedelta(days=1)).strftime("%Y-%m-%d") }}'
 min_query_date = '{{ (execution_date - macros.timedelta(days=7)).strftime("%Y-%m-%d") }}'
 ```
-First of all the script imports some basic Python datetime functions, which are useful for scheduling the DAG and querying data with date and time stamps.
+First of all, the script imports some basic Python datetime functions, which are useful for scheduling the DAG and querying data with date and time stamps.
 We import DAG (object), which we will need to instantiate a DAG.
 We import 'models' to be able to import the centrally stored variables, which I will explain below.
 We then import two operators from 'contrib'. I already briefly mentioned contrib with a link in chapter 2, but under 'contrib' in the Github repository of Airflow you can find standard connectors. The names we use here almost speak for themselves: 'bigquery_operator' to execute queries on BigQuery and 'bigquery_to_gcs' to store BigQuery data in Google Cloud Storage. 
@@ -118,7 +118,7 @@ We also import 'trigger_rule'. All operators have a trigger_rule argument which 
 * all_done: all parents are done with their execution;
 * etc. etc. Look for 'Trigger Rules' on https://airflow.apache.org/concepts.html
 
-For some static variables, like references to project names and storage locations, it can be useful to separate them from the code itself. This is also very useful if you apply the variables to multiple DAG files. Then, if you then need to change the variable you only have to change it in a single location. With  the code: 
+For some static variables, like references to project names and storage locations, it can be useful to separate them from the code itself. This is also very useful if you apply the variables to multiple DAG files. Then, if you then need to change the variable you only have to change it in a single location. With the code: 
 ```
 dag_vars = models.Variable.get("dag_xyz_config", deserialize_json=True)
 ```
