@@ -12,7 +12,7 @@ I wrote this tutorial as a Data Scientist and I believe many people would say Ai
 <sup>source: sensecorp.com</sup>
 <br/>
 
-#### 2. Advantages of working with Airflow
+### 2. Advantages of working with Airflow
 Working with Airflow provides you with a number of advantages as opposed to working with e.g. traditional cron jobs:
 * It has good facilities with respect to error handling, including upstream errors (dependencies);
 * It facilitates backfilling of historical data;
@@ -22,7 +22,7 @@ Working with Airflow provides you with a number of advantages as opposed to work
 * Integration in the cloud with big data and machine learning. You can build end-to-end (ML) solutions in the cloud with Airflow in combination with the other cloud services;
 * Thanks to the ease of use data engineers and data scientists don't waste much time on DevOps.
 
-#### 3. Setting up the Airflow environment in Google Cloud Platform (GCP)
+### 3. Setting up the Airflow environment in Google Cloud Platform (GCP)
 We will set up an Airflow environment in Google Cloud. Google has integrated Airflow in its offering Cloud Composer, with which setting up and Airfow environment is just a few clicks away. In addition GCP comes with a free $300,- trial credit per google account (gmail account) for a one year period.
 
 Within your Google Account launch your Google cloud console (https://console.cloud.google.com) and navigate to 'Composer' via the 'hamburger' icon in the top left corner. You will then see the options as displayed in the following visual:
@@ -56,7 +56,7 @@ When you use the button 'PYPI PACKAGES' you will be able to select more Python p
 
 In order to deploy a DAG file, drill down on the link DAGs folder. In chapter 5 I will explain how you can deploy the DAG of this repository (contained in the DAG folder of this repository), but before that I will explain the structure of this DAG and how to build one in chapter 4.
 
-#### 4. DAG structure and building a DAG
+### 4. DAG structure and building a DAG
 	
 With Airflow you can deploy DAGs, which stands for Directed Acyclic graph. This is a finite directed graph with no directed cycles. So it always goes in one direction and does not form a circle. The simple DAG for this tutorial is shown below: 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowgraphview.PNG" width="955" height="75">
@@ -78,7 +78,7 @@ Generally the structure of an Airflow DAG consists of 5 parts:
 
 I will explain these five steps using our DAG as an example.
 
-##### 4.1 Modules and variables
+#### 4.1 Modules and variables
 The main code elements of part 1 of the DAG file are:
 ```
 from datetime import date, datetime, timedelta
@@ -143,13 +143,13 @@ en
 https://airflow.apache.org/macros.html
 Misschien beter om bij catchup=True ook 'depends_on_past': True te gebruiken, om te voorkomen dat er teveel taken tegelijk draaien. Ff testen.
 
-##### 4.2 Default arguments
+#### 4.2 Default arguments
 lfdsaj
-##### 4.3 Instantiation of the DAG
+#### 4.3 Instantiation of the DAG
 lfdsaj
-##### 4.4 The tasks
+#### 4.4 The tasks
 lfdsaj
-##### 4.5 Dependencies / order of the flow
+#### 4.5 Dependencies / order of the flow
 lala
 
 #### 5. Deploying a DAG and checking the logs
