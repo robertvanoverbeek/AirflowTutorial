@@ -206,9 +206,20 @@ t1_make_bq_dataset = bash_operator.BashOperator(
         bash_command='bq ls {} || bq mk {}'.format(bq_dataset_name, bq_dataset_name))
 ```
 #### 4.5 Dependencies / order of the flow
-lala
+In the last part of the DAG we define the dependencies. In this case we want tasks 1 to 4 to execute in chronological order, which we can specify with:
 ```
 t1_make_bq_dataset >> t2_bq_recent_questions_query >> t3_export_questions_to_gcs  >> t4_delete_bq_dataset
+```
+It is also possible to specify this in a different format, as explained on (https://airflow.apache.org/tutorial.html#setting-up-dependencies). For instance with:
+
+```
+t1_make_bq_dataset << t2_bq_recent_questions_query << t3_export_questions_to_gcs  << t4_delete_bq_dataset
+```
+or
+```
+t4_delete_bq_dataset.set_upstream(t3_export_questions_to_gcs)
+t3_export_questions_to_gc.set_upstream(t2_bq_recent_questions_query)
+t2_bq_recent_questions_query.set_upstream(t1_make_bq_dataset)
 ```
 ### 5. Deploying a DAG and checking the logs
 
