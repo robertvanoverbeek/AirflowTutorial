@@ -57,7 +57,6 @@ When you use the button 'PYPI PACKAGES' you will be able to select more Python p
 In order to deploy a DAG file, drill down on the link DAGs folder. In chapter 5 I will explain how you can deploy the DAG of this repository (contained in the DAG folder of this repository), but before that I will explain the structure of this DAG and how to build one in chapter 4.
 
 ### 4. DAG structure and building a DAG
-	
 With Airflow you can deploy DAGs, which stands for Directed Acyclic graph. This is a finite directed graph with no directed cycles. So it always goes in one direction and does not form a circle. The simple DAG for this tutorial is shown below: 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowgraphview.PNG" width="955" height="75">
 <br/>
@@ -149,12 +148,8 @@ lfdsaj
 
 ```
 default_dag_args = {
-     # note the addition of time to the date, without which it will return an error.
-     # you can also use the datetime function, for instance: datetime(2019, 1, 1)
     'start_date': datetime.combine(firstday_five_months_back, datetime.min.time()),
     'end_date': datetime.combinefirstday_three_months_back, datetime.min.time()),
-     # in case you want backfill (called catchup), determined in step 3, I noticed it is best to select True for depends on the past.
-     # this will make jobs running in sequence instead of simultaneously, creating risks for errors with low cpu in this test case.
     'depends_on_past': True,
     'email': 'bla@bla.com',
     'email_on_failure': False,
@@ -168,13 +163,8 @@ default_dag_args = {
 lfdsaj
 ```
 with DAG(
-     # name of the DAG:
-    'popular_stackoverflow_questions_version8',
+    'popular_stackoverflow_questions_version_1',
     default_args=default_dag_args,
-
-    # scheduler interval. You can use cron notation or use
-    # preset intervals (https://airflow.apache.org/scheduler.html)
-    # In this case we apply 4AM of every first day of the month
     schedule_interval='@monthly',
     catchup=True
     ) as dag:
