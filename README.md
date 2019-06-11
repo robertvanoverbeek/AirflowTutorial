@@ -146,13 +146,51 @@ This creates a date string in format 'yyy-mm-dd', with the date one day prior to
 
 #### 4.2 Default arguments
 lfdsaj
+
+```
+default_dag_args = {
+     # note the addition of time to the date, without which it will return an error.
+     # you can also use the datetime function, for instance: datetime(2019, 1, 1)
+    'start_date': datetime.combine(firstday_five_months_back, datetime.min.time()),
+    'end_date': datetime.combinefirstday_three_months_back, datetime.min.time()),
+     # in case you want backfill (called catchup), determined in step 3, I noticed it is best to select True for depends on the past.
+     # this will make jobs running in sequence instead of simultaneously, creating risks for errors with low cpu in this test case.
+    'depends_on_past': True,
+    'email': 'bla@bla.com',
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 1,
+    'retry_delay': timedelta(minutes=3),
+    'project_id': gcp_project_name
+}
+```
 #### 4.3 Instantiation of the DAG
 lfdsaj
+```
+with DAG(
+     # name of the DAG:
+    'popular_stackoverflow_questions_version8',
+    default_args=default_dag_args,
+
+    # scheduler interval. You can use cron notation or use
+    # preset intervals (https://airflow.apache.org/scheduler.html)
+    # In this case we apply 4AM of every first day of the month
+    schedule_interval='@monthly',
+    catchup=True
+    ) as dag:
+```
 #### 4.4 The tasks
 lfdsaj
+```
+t1_make_bq_dataset = bash_operator.BashOperator(
+        task_id='make_bq_dataset',
+        bash_command='bq ls {} || bq mk {}'.format(bq_dataset_name, bq_dataset_name))
+```
 #### 4.5 Dependencies / order of the flow
 lala
-
+```
+t1_make_bq_dataset >> t2_bq_recent_questions_query >> t3_export_questions_to_gcs  >> t4_delete_bq_dataset
+```
 ### 5. Deploying a DAG and checking the logs
 
 lalala
