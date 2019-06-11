@@ -127,7 +127,7 @@ we define the variable 'dag_vars' and retrieve a set of centrally stored variabl
 In this case, in the UI, under 'Admin' > 'variables' we have to save a key 'dag_xyz_config', with
 a a set (replace the values with your Your Google Cloud Project ID and a bucket name without the gs:// prefix):
 ```
-{"gcp_project": "ml-test-240115", "gcs_bucket": "airflowbucket_tst"}
+{"gcp_project": "ml-test-xyz", "gcs_bucket": "airflowbucket_tst"}
 ```
 As shown in the screen dump below:
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowvars.png" width="1084" height="214">
@@ -144,7 +144,9 @@ max_query_date = '{{ (execution_date - macros.timedelta(days=1)).strftime("%Y-%m
 This creates a date string in format 'yyy-mm-dd', with the date one day prior to the execution date. I highlight that the execution date can be in the past when applying backfill, which we will use in our script. Later on you will be able to the effects of this in the created log files.
 
 #### 4.2 Default arguments
-lfdsaj
+By defining default arguments, we have the choice to explicitly pass a set of arguments to each task. 
+
+We doen hier wel project_id, maar niet bucket name. Dit had ook gekund. Eventueel testen.
 
 ```
 default_dag_args = {
