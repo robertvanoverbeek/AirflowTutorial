@@ -164,9 +164,9 @@ You can set 'start_date' and 'end_date' with the Python function 'datetime'. For
 ```
 'start_date': datetime(2019, 1, 1)
 ```
-In a production environment it is logical to use a fixed start_date. Only in this tutorial DAG we use a dynamic start date, which will keep the tutorial current.
+In a production environment it is logical to use a fixed start_date. Only in this tutorial DAG we use a moving start date, which will keep the tutorial current.
 
-I have put 'depends_on_past' to True to run the backfill in chronological order. When set to False it enables parallel runs, which might cause performance issues when using a Composer environment with low CPU specs.
+I have put 'depends_on_past' to True to run the backfill (called cathup in Airflow) in chronological order. When set to False it enables parallel runs, which might cause performance issues when using a Composer environment with low CPU specs.
 
 You can also specify the number of retries on failure and the retry_delay in case of a failure. 
 
@@ -175,7 +175,7 @@ To create email notification you will have to set up a SMTP server on the platfo
 As you can see I have defined 'project_id' within default_dag_args. Though, in this DAG project_id is only used in one task (t2), so instead of declaring it here, we could have declared it at task 2 with: project_id = gcp_project_name.
 
 #### 4.3 Instantiation of the DAG
-lfdsaj
+In our DAG file we instantiate a DAG as context managers with:
 ```
 with DAG(
     'popular_stackoverflow_questions_version_1',
@@ -183,8 +183,12 @@ with DAG(
     schedule_interval='@monthly',
     catchup=True
     ) as dag:
+     
+    task1 = .....
+    
+    task2 = .....
 ```
-Otherwise:
+which is good practice, in order to avoid code repetition (referring to the DAG within each task). The alternative would have been:
 ```
 dag = DAG(
     'bigquery_github_trends',
@@ -192,10 +196,10 @@ dag = DAG(
     schedule_interval=schedule_interval
     )
 ```
-and then make a reference to 'dag' within each task by stating dag=dag.
+followed by a reference to this'dag' within each task by stating 'dag=dag'.
 
 #### 4.4 The tasks
-lfdsaj
+In this tutorial I will not elaborate much on the tasks, because there are endless possibilities in that respect. In the code itself I have indcluded some comments to accompany the tasks or our DAG. For instance the first task in our DAG is a BashOperator task, which will create a dataset with a certain name in case it does not already exist:
 ```
 t1_make_bq_dataset = bash_operator.BashOperator(
         task_id='make_bq_dataset',
