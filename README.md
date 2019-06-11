@@ -80,6 +80,7 @@ I will explain these five steps using our DAG as an example.
 The code that is part of this step contains amongst other things:
 ```
 from datetime import date, datetime, timedelta
+
 from airflow import DAG
 from airflow import models
 from airflow.contrib.operators import bigquery_get_data
@@ -95,6 +96,7 @@ gcs_bucket_name = dag_vars["gcs_bucket"]
 max_query_date = '{{ (execution_date - macros.timedelta(days=1)).strftime("%Y-%m-%d") }}'
 min_query_date = '{{ (execution_date - macros.timedelta(days=7)).strftime("%Y-%m-%d") }}'
 ```
+As we will be using 
 
 Before we upload the DAG file, we are referencing the centrally stored variables.
 
