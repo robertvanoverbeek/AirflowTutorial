@@ -17,15 +17,14 @@ Working with Airflow provides you with a number of advantages as opposed to work
 * It has good facilities with respect to error handling, including upstream errors (dependencies);
 * It facilitates backfilling of historical data;
 * Monitoring / logging facilities;
-* A large user group contributing by building standard operators, enabling connections to many other infrastructures;
-* Airflow has extensive support for AWS and GCP and to a lesser extent for Azure (Hook, Sensor and Operator for Blob Storage and Azure Data Lake), although Databricks that has been integrated in Azure has contributed an Airflow operator which enables submitting runs to the Databricks platform. Hooks, Sensors and Operators are in the contrib section (beta), which can be found at https://github.com/apache/airflow/tree/master/airflow/contrib;
+* There is a large user group contributing by building standard operators, enabling connections to many other infrastructures. These can be found on https://github.com/apache/airflow/tree/master/airflow/contrib;
 * Integration in the cloud with big data and machine learning. You can build end-to-end (ML) solutions in the cloud with Airflow in combination with the other cloud services;
-* Thanks to the above-mentioned advantages, data engineers and data scientists don't waste much time on DevOps.
+* With the ease of use data engineers and data scientists don't waste much time on DevOps.
 
-#### 3. Setting up the Airflow environment in GCP
-A prerequisite to setting up an Airflow environment in GCP is that you have a google account (gmail account), with which you can launch Google Cloud Platform (GCP). The nice thing of GCP is that it comes with a free $300,- trial credit.
+#### 3. Setting up the Airflow environment in Google Cloud Platform (GCP)
+We will set up an Airflow environment in Google Cloud. Google has integrated Airflow in its offering Cloud Composer, with which setting up and Airfow environment is just a few clicks away. In addition GCP comes with a free $300,- trial credit per google account (gmail account) for a one year period.
 
-Then launch your Google cloud console (https://console.cloud.google.com), and navigate to 'Composer' via the 'hamburger' icon in the top left corner. You will then see the options as displayed in the following visual:
+Within your Google Account launch your Google cloud console (https://console.cloud.google.com) and navigate to 'Composer' via the 'hamburger' icon in the top left corner. You will then see the options as displayed in the following visual:
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
 <br/>
 
@@ -43,32 +42,30 @@ In the screen that follows, it is very easy to set up a basic Airflow Environmen
 * Python version. Select Python version 3.
 * Lastly click 'CREATE'.
 
-After a few minutes you will notice that the creation of the environment has been completed. You will then be able to drill down on it using the link, where you will find the following screen (the option 'node configuration' will become visible if you click 'EDIT'):
+After a few minutes you will notice that the creation of the environment has been completed. You will then be able to drill down on it, where you will find the following screen (the option 'node configuration' will become visible if you click 'EDIT'):
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="820" height="767">
 <br/>
 
-We note that the environment comes pre-installed with a number of Python packages, such as:
+The environment comes pre-installed with a number of Python packages, such as:
 
 Pandas, google-cloud-bigquery, google-cloud-dataflow, google-cloud-storage, Pandas-gbq, tensorflow and kubernetes.
 
 When you use the button 'PYPI PACKAGES' you will be able to select more Python packages (more information on: https://cloud.google.com/composer/docs/how-to/using/installing-python-dependencies).
 
-In the following paragraph I will explain how you can deploy the DAG of this repository.
+In order to deploy a DAG file, drill down on the link DAGs folder. In the following paragraph I will explain how you can deploy the DAG of this repository (contained in the DAG folder of this repository). 
 
-Following the link DAGs folder you can upload your DAG file with .py extension. In this case the file in the DAG folder of this repository. 
-
-#### 4. DAG structure and building a DAG
+#### 4. DAG structure and building and deploying a DAG
 	
 Explain about the DAG.
 what is asyclical graph. a pipeline.  Pipelines are designed as a directed acyclic graph by dividing a pipeline into tasks that can be executed independently. Then these tasks are combined logically as a graph.
 
-This script demonstrates the usage of Airflow in an ETL process. In this case we periodically Extract data from some place 
+This script demonstrates the usage of Airflow in an ETL process. In this case it periodically Extracts data from some place 
 (public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load). 
 From there it can be made available as data source for i.g. reporting, for instance for the creation of a (Data Studio) dashboard. As a side note
 to this: If you use Power BI in combination with GCP (Google Cloud Platform) it is better to store and leave the data in BigQuery (which is a step in the 
 applied DAG below), as this makes securely accessing the data from Power BI easier with the standard BigQuery connector in Power BI.
-We believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the data publicly available, which is
+I believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the data publicly available, which is
 explained in https://cloud.google.com/storage/docs/access-control/making-data-public
 
 
@@ -90,12 +87,12 @@ Generally the structure of an Airflow DAG consists of 5 parts:
 4. the tasks
 5. dependencies / order
 
-In the code below we will reference to these steps.
+In the code below I will reference to these steps.
 
 For this DAG you need to save key-value pairs in Airflow (via Admin > Variables) for the following items:
 * gcp_project - Your Google Cloud Project ID.
 * gcs_bucket - The Google Cloud Storage bucket to save the output file to. This also implies you have created such a bucket.
-In the code below, at step 1, we will explain how to implement the variables.
+In the code below, at step 1, I will explain how to implement the variables.
 Check https://airflow.apache.org/concepts.html#variables if you want more information about Airflow variables.
 Check https://cloud.google.com/storage/docs/creating-buckets if you need more information on creating a gcp bucket,
 as this is beyond the scope of this Airflow POC example.
@@ -104,8 +101,8 @@ Airflow Variables are stored in Metadata Database, so any call to variables woul
 Your DAG files are parsed every X seconds. If you use a large number of variable in your DAG could mean you might end
 up saturating the number of allowed connections to your database.
 To avoid this situation, it is advisable to use a single Airflow variable with JSON value.
-For instance this case, under Admin > variables in the UI we will save a key 'dag_xyz_config', with
-a a set (replace the values with your project ID and bucket name without the gs:// prefix, as we fill it in below):
+For instance this case, under Admin > variables in the UI I will save a key 'dag_xyz_config', with
+a a set (replace the values with your project ID and bucket name without the gs:// prefix, as I fill it in below):
 {"gcp_project": "ml-test-240115", "gcs_bucket": "airflowbucket_tst"}
 
 Behandel ook macros, zoals timedelta: info gebruiken van:
