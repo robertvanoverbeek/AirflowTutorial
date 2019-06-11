@@ -9,7 +9,7 @@ I wrote this tutorial as a Data Scientist and I believe many people would say Ai
 * Quite often companies do not have dedicated DS an DE teams, as most companies do not handle terabytes of data daily and/or streaming data (Big data). Even if they have both, either of the two might not be available at that time due to other priorities. This makes it an asset to be able to do work on both. Besides, if you, as a Data Scientist or an Engineer, can prototype a working Proof-Of-Concept (most likely involving both DE and DS work), it then becomes easier to convince others within the company about the value that can be created.
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
-<sup>source: sensecorp.com</sup>
+<sup>figure 1. Source: sensecorp.com</sup>
 <br/>
 
 ### 2. Advantages of working with Airflow
@@ -28,6 +28,7 @@ We will set up an Airflow environment in Google Cloud. Google has integrated Air
 Within your Google Account launch your Google cloud console (https://console.cloud.google.com) and navigate to 'Composer' via the 'hamburger' icon in the top left corner. You will then see the options as displayed in the following visual:
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
+<sup>figure 2. Composer Menu</sup>
 <br/>
 One note beforehand: in this screen you see a delete button with which you can delete the environment after usage in order to avoid unnecessary costs!
 
@@ -46,6 +47,7 @@ In the screen that follows, it is very easy to set up a basic Airflow Environmen
 After a few minutes you will notice that the creation of the environment has been completed. You will then be able to drill down on it, where you will find the following screen (the option 'node configuration' will become visible if you click 'EDIT'):
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="820" height="767">
+<sup>figure 3. Composer Config</sup>
 <br/>
 
 The environment comes pre-installed with a number of Python packages, such as:
@@ -131,6 +133,7 @@ a a set (replace the values with your Your Google Cloud Project ID and a bucket 
 ```
 As shown in the screen dump below:
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowvars.png" width="1084" height="214">
+<sup>figure 4. Airflow variables</sup>
 <br/>
 Check https://cloud.google.com/storage/docs/creating-buckets if you need more information on creating a gcp bucket,
 as this is beyond the scope of this Airflow POC example.
@@ -226,6 +229,7 @@ t2_bq_recent_questions_query.set_upstream(t1_make_bq_dataset)
 Upload the .py file which contains the DAG script.
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
+<sup>figure 6. Airflow Tree View</sup>
 
 
 
