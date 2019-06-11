@@ -16,10 +16,11 @@ I wrote this tutorial as a Data Scientist and I believe many people would say Ai
 Working with Airflow provides you with a number of advantages as opposed to working with e.g. traditional cron jobs:
 * It has good facilities with respect to error handling, including upstream errors (dependencies);
 * It facilitates backfilling of historical data;
-* Monitoring / logging facilities;
-* There is a large user group contributing by building standard operators, enabling connections to many other infrastructures. These can be found on https://github.com/apache/airflow/tree/master/airflow/contrib;
+* Built in Monitoring / logging;
+* Based on widely used Python;
+* There is a large user group contributing by building standard operators, enabling connections to many other infrastructures. These can be found in 'contrib' on https://github.com/apache/airflow/tree/master/airflow/contrib;
 * Integration in the cloud with big data and machine learning. You can build end-to-end (ML) solutions in the cloud with Airflow in combination with the other cloud services;
-* With the ease of use data engineers and data scientists don't waste much time on DevOps.
+* Thanks to the ease of use data engineers and data scientists don't waste much time on DevOps.
 
 #### 3. Setting up the Airflow environment in Google Cloud Platform (GCP)
 We will set up an Airflow environment in Google Cloud. Google has integrated Airflow in its offering Cloud Composer, with which setting up and Airfow environment is just a few clicks away. In addition GCP comes with a free $300,- trial credit per google account (gmail account) for a one year period.
@@ -64,8 +65,9 @@ This DAG script of this tutorial demonstrates the usage of Airflow in an ETL pro
 
 While our DAG is quite simple in terms of processes it posesses some extra features that also highlight some functionalities of Airflow:
 * Centrally strored variables;
+* The usage of Macros and Jinja Templating;
 * Backfilling of historical data;
-* The usage of Macros and Jinja Templating.
+* Use a DAG as context managers.
 
 Generally the structure of an Airflow DAG consists of 5 parts:
 1. Importing the modules and declaring variables, including referencing the centrally stored variables;
@@ -77,13 +79,12 @@ Generally the structure of an Airflow DAG consists of 5 parts:
 I will explain these five steps using our DAG as an example.
 
 ##### 4.1 Modules and variables
-The code that is part of this step contains amongst other things:
+The main code elements of part 1 of the DAG file are:
 ```
 from datetime import date, datetime, timedelta
 
 from airflow import DAG
 from airflow import models
-from airflow.contrib.operators import bigquery_get_data
 from airflow.contrib.operators import bigquery_operator
 from airflow.contrib.operators import bigquery_to_gcs
 from airflow.operators import bash_operator
@@ -96,7 +97,33 @@ gcs_bucket_name = dag_vars["gcs_bucket"]
 max_query_date = '{{ (execution_date - macros.timedelta(days=1)).strftime("%Y-%m-%d") }}'
 min_query_date = '{{ (execution_date - macros.timedelta(days=7)).strftime("%Y-%m-%d") }}'
 ```
-As we will be using 
+First of all the script imports some basic Python datetime functions, which are useful for scheduling the DAG and querying data with date and time stamps.
+We import DAG (object), which we will need to instantiate a DAG.
+We then import two operators from 'contrib'. I already briefly mentioned contrib with a link in chapter 2, but under 'contrib' in the Github repository of Airflow you can find standard connectors. The names we use here almost speak for themselves: 'bigquery_operator' to execute queries on BigQuery and 'bigquery_to_gcs' to store BigQuery data in Google Cloud Storage. 
+We also import 'bash_operator' to be able to execute bash commands. Airflow provides operators for many common tasks, including ():
+
+* BashOperator - executes a bash command
+* PythonOperator - calls an arbitrary Python function
+* EmailOperator - sends an email
+* SimpleHttpOperator - sends an HTTP request
+* MySqlOperator, SqliteOperator, PostgresOperator, MsSqlOperator, OracleOperator, JdbcOperator, etc. - executes a SQL command
+* Sensor - waits for a certain time, file, database row, S3 key, etc…
+
+In addition to these basic building blocks, there are many more specific operators: DockerOperator, HiveOperator, S3FileTransformOperator, PrestoToMySqlTransfer, SlackAPIOperator… (check for 'Operators' on https://airflow.apache.org/concepts.html?highlight=connection for more info).
+
+We also import 'trigger_rule'. All operators have a trigger_rule argument which defines the rule by which the generated task get triggered. The default value for trigger_rule is all_success and can be defined as “trigger this task when all directly upstream tasks have succeeded”:
+
+* all_success: (default) all parents have succeeded. We will use this in one of our tasks;
+* all_failed: all parents are in a failed or upstream_failed state;
+* all_done: all parents are done with their execution;
+* etc. etc. Look for 'Trigger Rules' on https://airflow.apache.org/concepts.html
+
+
+
+
+
+There are also other modules possible!
+
 
 Before we upload the DAG file, we are referencing the centrally stored variables.
 
@@ -146,7 +173,7 @@ lfdsaj
 ##### 4.5 Dependencies / order of the flow
 lala
 
-#### 5. Deploying a DAG
+#### 5. Deploying a DAG and checking the logs
 
 lalala
 
