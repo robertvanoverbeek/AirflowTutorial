@@ -144,25 +144,35 @@ max_query_date = '{{ (execution_date - macros.timedelta(days=1)).strftime("%Y-%m
 This creates a date string in format 'yyy-mm-dd', with the date one day prior to the execution date. I highlight that the execution date can be in the past when applying backfill, which we will use in our script. Later on you will be able to the effects of this in the created log files.
 
 #### 4.2 Default arguments
-By defining default arguments, we have the choice to explicitly pass a set of arguments to each task. 
-
-We doen hier wel project_id, maar niet bucket name. Dit had ook gekund. Eventueel testen.
-
+By defining default arguments, we have the choice to explicitly pass a set of arguments to each task. So, put differently, these arguments are broadcasted to all the tasks in the DAG. Our DAG contains:
 ```
 default_dag_args = {
     'start_date': datetime.combine(firstday_five_months_back, datetime.min.time()),
     'end_date': datetime.combinefirstday_three_months_back, datetime.min.time()),
     'depends_on_past': True,
+    'retries': 1,
+    'retry_delay': timedelta(minutes=3),
     'email': 'bla@bla.com',
     'email_on_failure': False,
     'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': timedelta(minutes=3),
     'project_id': gcp_project_name
 }
 ```
-To create email notification you will have to set up a SMTP server on the platform. In GCP you can create this as explained on https://cloud.google.com/composer/docs/how-to/managing/creating#notification. This uses SendGrid as provider with which you are allowed to send 12,000 mails per month for free (at time of writing). I believe SendGrid can also be used on AWs.
+On https://airflow.apache.org/_api/airflow/models/index.html#airflow.models.BaseOperator you can find more information on the arguments you can set. 
 
+You can set 'start_date' and 'end_date' with the Python function 'datetime'. For instance:
+```
+'start_date': datetime(2019, 1, 1)
+```
+In a production environment it is logical to use a fixed start_date. Only in this tutorial DAG we use a dynamic start date, which will keep the tutorial current.
+
+I have put 'depends_on_past' to True to run the backfill in chronological order. When set to False it enables parallel runs, which might cause performance issues when using a Composer environment with low CPU specs.
+
+You can also specify the number of retries on failure and the retry_delay in case of a failure. 
+
+To create email notification you will have to set up a SMTP server on the platform. In GCP you can create this as explained on https://cloud.google.com/composer/docs/how-to/managing/creating#notification. This uses SendGrid as provider with which you are allowed to send 12,000 mails per month for free (at time of writing). I believe SendGrid can also be used on AWS.
+
+As you can see I have defined 'project_id' within default_dag_args. Though, in this DAG project_id is only used in one task (t2), so instead of declaring it here, we could have declared it at task 2 with: project_id = gcp_project_name.
 
 #### 4.3 Instantiation of the DAG
 lfdsaj
