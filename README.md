@@ -228,7 +228,7 @@ t2_bq_recent_questions_query.set_upstream(t1_make_bq_dataset)
 ```
 ### 5. Deploying a DAG and checking the logs
 
-Upload the .py file which contains the DAG script.
+After we have entered the variables in the web UI (pagragraph 4.1), we can upload the .py file from the DAG folder in this repository to Airflow. Follow the link 'DAGs folder' as displayed in figure 3 and then use the button 'Upload files'. 
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
 <sup>figure 6. Airflow Tree View</sup>
