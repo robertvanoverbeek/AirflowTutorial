@@ -25,6 +25,7 @@ Working with Airflow provides you with a number of advantages as opposed to work
 We will set up an Airflow environment in Google Cloud. Google has integrated Airflow in its offering Cloud Composer, with which setting up and Airfow environment is just a few clicks away. In addition GCP comes with a free $300,- trial credit per google account (gmail account) for a one year period.
 
 Within your Google Account launch your Google cloud console (https://console.cloud.google.com) and navigate to 'Composer' via the 'hamburger' icon in the top left corner. You will then see the options as displayed in the following visual:
+
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
 <br/>
 
