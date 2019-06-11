@@ -125,7 +125,7 @@ dag_vars = models.Variable.get("dag_xyz_config", deserialize_json=True)
 ```
 we define the variable 'dag_vars' and retrieve a set of centrally stored variables (JSON, in this case under the name 'dag_xyz_config') with a single command. This is better than retrieving every variable separately. Airflow Variables are stored in Metadata Database, so any call to variables means a connection to Metadata DB. Your DAG files are parsed every X seconds. If you use a large number of variable in your DAG could mean you might end up saturating the number of allowed connections to your database.
 
-In this case, in the UI, under Admin > variables we have to save a key 'dag_xyz_config', with
+In this case, in the UI, under 'Admin' > 'variables' we have to save a key 'dag_xyz_config', with
 a a set (replace the values with your Your Google Cloud Project ID and a bucket name without the gs:// prefix):
 ```
 {"gcp_project": "ml-test-240115", "gcs_bucket": "airflowbucket_tst"}
@@ -136,12 +136,13 @@ As shown in the screen dump below:
 Check https://cloud.google.com/storage/docs/creating-buckets if you need more information on creating a gcp bucket,
 as this is beyond the scope of this Airflow POC example.
 
+Apache Airflow allows the usage of Jinja templating, which makes available multiple helpful variables and macros to aid in date manipulation (https://airflow.apache.org/macros.html and https://diogoalexandrefranco.github.io/about-airflow-date-macros-ds-and-execution-date/). 
 
-Behandel ook macros, zoals timedelta: info gebruiken van:
-https://diogoalexandrefranco.github.io/about-airflow-date-macros-ds-and-execution-date/
-en
-https://airflow.apache.org/macros.html
-Misschien beter om bij catchup=True ook 'depends_on_past': True te gebruiken, om te voorkomen dat er teveel taken tegelijk draaien. Ff testen.
+In our script we will use the following example of a Jinja template and macro:
+```
+max_query_date = '{{ (execution_date - macros.timedelta(days=1)).strftime("%Y-%m-%d") }}'
+```
+This creates a date string in format 'yyy-mm-dd', with the date one day prior to the execution date. I highlight that the execution date can be in the past when applying backfill, which we will use in our script. Later on you will be able to the effects of this in the created log files.
 
 #### 4.2 Default arguments
 lfdsaj
