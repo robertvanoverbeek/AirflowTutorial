@@ -218,7 +218,7 @@ In the last part of the DAG we define the dependencies. In this case we want tas
 t1_make_bq_dataset >> t2_bq_recent_questions_query >> t3_export_questions_to_gcs  >> t4_delete_bq_dataset
 ```
 The result of this can be seen in figure 4. You can see this 'Graph View' by using the link 'Airflow Web UI', as displayed in figure 3, and then use the button 'Graph View'. 
-It is also possible to specify the dependencies in a different format, as explained on (https://airflow.apache.org/tutorial.html#setting-up-dependencies). For instance with:
+It is also possible to specify the dependencies in a different format. For instance with:
 
 ```
 t1_make_bq_dataset << t2_bq_recent_questions_query << t3_export_questions_to_gcs  << t4_delete_bq_dataset
@@ -229,6 +229,7 @@ t4_delete_bq_dataset.set_upstream(t3_export_questions_to_gcs)
 t3_export_questions_to_gc.set_upstream(t2_bq_recent_questions_query)
 t2_bq_recent_questions_query.set_upstream(t1_make_bq_dataset)
 ```
+There are even more variations, which you can find on https://airflow.apache.org/tutorial.html#setting-up-dependencies.
 ### 5. Deploying a DAG and checking the logs
 
 After we have entered the variables in the web UI (pagragraph 4.1), we can upload the .py file from the DAG folder in this repository to Airflow. Follow the link 'DAGs folder' as displayed in figure 3 and then use the button 'Upload files'. 
