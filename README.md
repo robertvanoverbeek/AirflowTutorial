@@ -124,14 +124,14 @@ We also import 'trigger_rule'. All operators have a trigger_rule argument which 
 * all_done: all parents are done with their execution;
 * etc. etc. Look for 'Trigger Rules' on https://airflow.apache.org/concepts.html
 
-For some static variables, like references to project names and storage locations, it can be useful to separate them from the code itself. This is also very useful if you apply the variables to multiple DAG files. Then, if you need to change a variable, you can do so in a single centralized location. With the code: 
+For some static variables, like references to a Project ID and storage locations, it can be useful to separate them from the code itself. This is also very useful if you apply the variables to multiple DAG files. Then, if you need to change a variable, you can do so in a single centralized location. With the code: 
 ```
 dag_vars = models.Variable.get("dag_xyz_config", deserialize_json=True)
 ```
 we define the variable 'dag_vars' and retrieve a set of centrally stored variables (JSON, in this case under the name 'dag_xyz_config') with a single command. This is better than retrieving every variable separately. Airflow Variables are stored in Metadata Database, so any call to variables means a connection to Metadata DB. Your DAG files are parsed every X seconds. If you use a large number of variables in your DAG could mean you might end up saturating the number of allowed connections to your database.
 
 In this case, in the UI, under 'Admin' > 'variables' we have to save a key 'dag_xyz_config', with
-a a set (replace the values with your Google Cloud Project ID and a bucket name without the gs:// prefix):
+a a set (replace the values with your Google Cloud Project ID, thus not your project name!, and a bucket name without the gs:// prefix):
 ```
 {"gcp_project": "ml-test-xyz", "gcs_bucket": "airflowbucket_tst"}
 ```
