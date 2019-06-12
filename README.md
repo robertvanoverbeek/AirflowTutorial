@@ -1,12 +1,12 @@
 # Hands-on Airflow tutorial using Google Cloud Composer
 The aim of this Airflow tutorial is to explain the main principles of Airflow and to provide you with a hands-on working example to get you up to speed with Airflow. We will be using Google Cloud because of its free $300,- credit. Although it is perfectly fine to read through this tutorial without using Cloud Composer, just te learn how Airflow works, but the DAG we will apply is tailored to GCP. We will read and write from Google BigQuery and Google Cloud storage. 
 
-Following the definition of Airflow, 'Airflow is a platform to programmatically author, schedule and monitor workflows. Airflow is not a data streaming solution. In this tutorial we will learn more about the advantages of working with Airflow.
+Following the definition of Airflow, 'Airflow is a platform to programmatically author, schedule and monitor workflows. Airflow is not a data streaming solution. I will leave it at that, as I will provide many more details throughout this tutorial.  
 
 I wrote this tutorial as a Data Scientist and it might be that people will say Airflow is a tool for Data Engineers to implement for instance ETL processes. Though, I believe that being able to perform Data Engineering tasks as a Data Scientist is valuable:
 
-* With the rise of Cloud providers like AWS, GCP and Azure, which offer a suite of offerings (storage, streaming, Apps, Web, ML), the traditional Data Science pyramid as shown below becomes increasingly vertically integrated. These movements make it easier and faster to create end-to-end solutions in the cloud, even for a small team or as a single person (e.g. https://aws.amazon.com/blogs/machine-learning/build-end-to-end-machine-learning-workflows-with-amazon-sagemaker-and-apache-airflow/). Artificial intelligence, Internet of things and analytics are the upsell technologies for cloud vendors;
-* Quite often companies do not have dedicated DS an DE teams, as most companies do not handle terabytes of data daily and/or streaming data (Big data). Even if they have both, either of the two might not be available at that time due to other priorities. This makes it an asset to be able to do work on both. Besides, if you, as a Data Scientist or an Engineer, can prototype a working Proof-Of-Concept (most likely involving both DE and DS work), it then becomes easier to convince others within the company about the value that can be created.
+* With the rise of Cloud providers like AWS, GCP and Azure, with a suite of offerings (storage, streaming, Apps, Web, ML), the traditional Data Science pyramid as shown below, becomes increasingly vertically integrated. These movements make it easier and faster to create end-to-end solutions in the cloud, even for a small team, or as a single person (e.g. https://aws.amazon.com/blogs/machine-learning/build-end-to-end-machine-learning-workflows-with-amazon-sagemaker-and-apache-airflow/). Artificial intelligence, Internet of things and analytics are already the upsell technologies for cloud vendors;
+* Quite often, companies do not have dedicated DS an DE teams, as most companies do not handle terabytes of data daily and/or streaming data (Big data). Even if they have both, either of the two might not be available for prototyping due to other priorities. This makes it an asset to be able to do work on both. Besides, if you, as a Data Scientist or an Engineer, can prototype a working Proof-Of-Concept (most likely involving both DE and DS work), it becomes easier to convince others within the company about the value that can be created with it.
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
 <sup>figure 1. Source: sensecorp.com</sup>
@@ -20,17 +20,17 @@ Working with Airflow provides you with a number of advantages as opposed to work
 * Based on widely used Python;
 * There is a large user group contributing by building standard operators, enabling connections to many other infrastructures. These can be found in 'contrib' on https://github.com/apache/airflow/tree/master/airflow/contrib;
 * Integration in the cloud with big data and machine learning. You can build end-to-end (ML) solutions in the cloud with Airflow in combination with the other cloud services;
-* Thanks to the ease of use data engineers and data scientists don't waste much time on DevOps.
+* Thanks to the ease of use data engineers and data scientists do not waste much time on DevOps.
 
 ### 3. Setting up the Airflow environment in Google Cloud Platform (GCP)
-We will set up an Airflow environment in Google Cloud. Google has integrated Airflow in its offering Cloud Composer, with which setting up and Airflow environment is just a few clicks away. In addition GCP comes with a free $300,- trial credit per google account (Gmail account) for a one year period.
+We will set up an Airflow environment in Google Cloud. Google has integrated Airflow in its offering Cloud Composer, with which setting up an Airflow environment is just a small number of clicks away. In addition GCP comes with a free $300,- trial credit per google account (Gmail account) for a one year period. 
 
-Within your Google Account launch your Google cloud console (https://console.cloud.google.com) and navigate to 'Composer' via the 'hamburger' icon in the top left corner. You will then see the options as displayed in the following visual:
+If you already have a Google account, or once you have set it up, launch your Google cloud console (https://console.cloud.google.com) and navigate to 'Composer' via the 'hamburger' icon in the top left corner. You will then see the options as displayed in figure 2:
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
 <sup>figure 2. Composer Menu</sup>
 <br/>
-One note beforehand: in this screen you see a delete button with which you can delete the environment after usage in order to avoid unnecessary costs!
+One note beforehand: in figure 2 you also see a delete button with which you can delete the environment after usage in order to avoid unnecessary costs!
 
 To create an environment:
 * You may tick the box beta features to be able to use the latest functionalities;
@@ -38,13 +38,13 @@ To create an environment:
 
 In the screen that follows, it is very easy to set up a basic Airflow Environment. Fill in:
 * A name for the environment;
-* Select a location closest to you. For instance europe-west1-d. Check https://cloud.google.com/compute/docs/regions-zones/ if you want to know more about server locations;
-* Machine type. For this tutorial you may choose the smallest configuration in terms of CPUs;
-* Disk size. At the time of writing the minimum is 20GB;
+* Select the location closest to you. For instance europe-west1-d. Check https://cloud.google.com/compute/docs/regions-zones/ if you want to know more about server locations;
+* Machine type. For this tutorial you may choose the smallest configuration in terms of CPU and RAM;
+* Disk size. At the time of writing the minimum is 20GB, you can go with that;
 * Python version. Select Python version 3.
-* Lastly click 'CREATE'.
+* Then click 'CREATE'.
 
-After a few minutes you will notice that the creation of the environment has been completed. You will then be able to drill down on it, where you will find the following screen (the option 'node configuration' will become visible if you click 'EDIT'):
+After a few minutes you will notice that the creation of the environment has been completed. You will be able to drill down on it, where you will find the following screen (the option 'node configuration' will become visible if you click 'EDIT'):
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="820" height="767">
 <sup>figure 3. Composer Config</sup>
@@ -54,9 +54,9 @@ The environment comes pre-installed with several Python packages, such as:
 
 Pandas, google-cloud-bigquery, google-cloud-dataflow, google-cloud-storage, Pandas-gbq, tensorflow and kubernetes.
 
-When you use the button 'PYPI PACKAGES' you will be able to select more Python packages (more information on: https://cloud.google.com/composer/docs/how-to/using/installing-python-dependencies).
+When you use the button 'PYPI PACKAGES' you will be able to select more Python packages (more information on: https://cloud.google.com/composer/docs/how-to/using/installing-python-dependencies). For this tutorial we do not need additional packages.
 
-In order to deploy a DAG file, drill down on the link DAGs folder. In chapter 5 I will explain how you can deploy the DAG of this repository (contained in the DAG folder of this repository), but before that I will explain the structure of this DAG and how to build one in chapter 4.
+In order to deploy a DAG file, drill down on the link DAGs folder. In chapter 5, I will explain how you can deploy the DAG of this repository (contained in the DAG folder of this repository), but before that I will explain the structure of this DAG file and how to build one in the following chapter.
 
 ### 4. DAG structure and building a DAG
 With Airflow you can deploy DAGs, which stands for Directed Acyclic graph. This is a finite directed graph with no directed cycles. Therefore the graph always follows one direction and does not form a circle. The simple DAG for this tutorial is shown below: 
@@ -238,3 +238,5 @@ We can then follow the execution of the DAG by following the link 'Airflow web U
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview2.PNG" width="1183" height="647">
 <sup>figure 6. Airflow Tree View</sup>
+
+One final note, do not forget to delete the Composer environment once you no longer need it! In figure 2 you see the delete button.
