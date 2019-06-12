@@ -1,4 +1,4 @@
-# Hands-on Airflow Tutorial using Google Cloud Composer
+# Hands-on Airflow tutorial using Google Cloud Composer
 
 ### 1. Introduction
 The aim of this Airflow tutorial is to explain the main principles of Airflow and to provide you with a hands-on working example to get you up to speed with Airflow. Following the definition of Airflow, 'Airflow is a platform to programmatically author, schedule and monitor workflows. Airflow is not a data streaming solution.
