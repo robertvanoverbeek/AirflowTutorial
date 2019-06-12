@@ -6,16 +6,16 @@ Following the definition of Airflow, 'Airflow is a platform to programmatically 
 I wrote this tutorial as a Data Scientist and it might be that people will say Airflow is a tool for Data Engineers to implement for instance ETL processes. Though, I believe that being able to perform Data Engineering tasks as a Data Scientist is valuable:
 
 * With the rise of Cloud providers like AWS, GCP and Azure, with a suite of offerings (storage, streaming, Apps, Web, ML), the traditional Data Science pyramid as shown below, becomes increasingly vertically integrated. These movements make it easier and faster to create end-to-end solutions in the cloud, even for a small team, or as a single person (e.g. https://aws.amazon.com/blogs/machine-learning/build-end-to-end-machine-learning-workflows-with-amazon-sagemaker-and-apache-airflow/). Artificial intelligence, Internet of things and analytics are already the upsell technologies for cloud vendors;
-* Quite often, companies do not have dedicated DS an DE teams, as most companies do not handle terabytes of data daily and/or streaming data (Big data). Even if they have both, either of the two might not be available for prototyping due to other priorities. This makes it an asset to be able to do work on both. Besides, if you, as a Data Scientist or an Engineer, can prototype a working Proof-Of-Concept (most likely involving both DE and DS work), it becomes easier to convince others within the company about the value that can be created with it.
+* Quite often, companies do not have dedicated DS an DE teams, as most companies do not handle terabytes of data daily and/or streaming data (Big data). Or even if the company has two dedicated teams, either of the two might not be available for prototyping due to different priorities. This makes it an asset to be able to do work on both. Besides, if you, as a Data Scientist or an Engineer, can prototype a working Proof-Of-Concept, most likely involving both DE and DS work, it becomes easier to convince others within the company about the value that can be created with it.
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/DSpyramid.PNG" width="300" height="200">
 <sup>figure 1. Source: sensecorp.com</sup>
 <br/>
 
 ### 2. Advantages of working with Airflow
-Working with Airflow provides you with a number of advantages as opposed to working with e.g. traditional cron jobs:
+Working with Airflow provides you with a number of advantages as opposed to working with e.g. traditional cron jobs or other DIY scripts:
 * It has good facilities with respect to error handling, including upstream errors (dependencies);
-* It facilitates backfilling of historical data;
+* It facilitates backfilling of historical data (catchup);
 * Built in Monitoring / logging;
 * Based on widely used Python;
 * There is a large user group contributing by building standard operators, enabling connections to many other infrastructures. These can be found in 'contrib' on https://github.com/apache/airflow/tree/master/airflow/contrib;
@@ -23,14 +23,14 @@ Working with Airflow provides you with a number of advantages as opposed to work
 * Thanks to the ease of use data engineers and data scientists do not waste much time on DevOps.
 
 ### 3. Setting up the Airflow environment in Google Cloud Platform (GCP)
-We will set up an Airflow environment in Google Cloud. Google has integrated Airflow in its offering Cloud Composer, with which setting up an Airflow environment is just a small number of clicks away. In addition GCP comes with a free $300,- trial credit per google account (Gmail account) for a one year period. 
+We will set up an Airflow environment in Google Cloud. Google has integrated Airflow in its service Cloud Composer, with which setting up an Airflow environment is just a small number of clicks away. In addition GCP comes with a free $300,- trial credit per google account (Gmail account) for a one year period. 
 
 If you already have a Google account, or once you have set it up, launch your Google cloud console (https://console.cloud.google.com) and navigate to 'Composer' via the 'hamburger' icon in the top left corner. You will then see the options as displayed in figure 2:
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
 <sup>figure 2. Composer Menu</sup>
 <br/>
-One note beforehand: in figure 2 you also see a delete button with which you can delete the environment after usage in order to avoid unnecessary costs!
+One note beforehand: in figure 2 you also see a delete button to delete the environment after usage in order to avoid unnecessary costs!
 
 To create an environment:
 * You may tick the box beta features to be able to use the latest functionalities;
@@ -40,7 +40,7 @@ In the screen that follows, it is very easy to set up a basic Airflow Environmen
 * A name for the environment;
 * Select the location closest to you. For instance europe-west1-d. Check https://cloud.google.com/compute/docs/regions-zones/ if you want to know more about server locations;
 * Machine type. For this tutorial you may choose the smallest configuration in terms of CPU and RAM;
-* Disk size. At the time of writing the minimum is 20GB, you can go with that;
+* Disk size. At the time of writing the minimum is 20GB, which will suffice for this exercise;
 * Python version. Select Python version 3.
 * Then click 'CREATE'.
 
@@ -66,12 +66,12 @@ With Airflow you can deploy DAGs, which stands for Directed Acyclic graph. This 
 The DAG script of this tutorial demonstrates the usage of Airflow in an ETL process. In this case it periodically Extracts data from some place (public BigQuery dataset stackoverflow.posts_questions) over a certain time period and store it in a certain form (Transform) as csv file (Load).
 Let's assume that, on a monthly basis (every first day of the month), we want to store a csv file containing the most popular Stack Overflow questions of the previous month (for speed and simplicity we apply 7 days instead of a full month). In this case the information can be retrieved from a public Google dataset (https://cloud.google.com/bigquery/public-data/). 
 
-More concrete, we want to run a SQL query on this dataset on a monthly basis and store the data as a temporary Bigquery table. Then, in order to save some costs, we want to store the data as csv files, after which we can remove the temporary Bigquery table. From there the csv files can be made available as data source for e.g. reporting (e.g. very simple with Google's Data Studio) and/or Machine Learning. Side note: If you want to use Power BI in combination with GCP it is better to store and leave the data in BigQuery (which is also a step in the DAG of this tutorial), as this makes securely accessing the data from Power BI easier with the standard BigQuery connector in Power BI. I believe using a csv file stored in GCP for usage in a Power BI is only advisable if you can make the data publicly available, which step is explained in https://cloud.google.com/storage/docs/access-control/making-data-public.
+In more detail, we want to run a SQL query on this dataset on a monthly basis and store the data as a temporary Bigquery table. Then, in order to save some costs, we want to store the data as csv files, after which we can remove the temporary Bigquery table. From there the csv files can be made available as data source for e.g. reporting (e.g. very simple with Google's Data Studio) and/or Machine Learning. Side note: If you want to use Power BI in combination with GCP it is better to store and leave the data in BigQuery (which is also a step in the DAG of this tutorial), as this makes securely accessing the data from Power BI easier with the standard BigQuery connector in Power BI. I believe using a csv file stored in GCP for usage in a Power BI is only advisable if it is ok to make the data publicly available, which step is explained in https://cloud.google.com/storage/docs/access-control/making-data-public.
 
 While the DAG we will create is quite simple in terms of processes we will add some extra features that are possible with Airflow:
 * Centrally stored variables;
 * The usage of Macros and Jinja Templating;
-* Backfilling of historical data. Thus, once we deploy the DAG we want the script to process a number of previous months too;
+* Backfilling of historical data (catchup). Thus, once we deploy the DAG we want the script to process a number of previous months too;
 * Use a DAG as context managers.
 
 Generally, the structure of an Airflow DAG consists of 5 parts:
@@ -105,7 +105,7 @@ min_query_date = '{{ (execution_date - macros.timedelta(days=7)).strftime("%Y-%m
 First of all, the script imports some basic Python datetime functions, which are useful for scheduling the DAG and querying data with date and time stamps.
 We import DAG (object), which we will need to instantiate a DAG.
 We import 'models' to be able to import the centrally stored variables, which I will explain below.
-We then import two operators from 'contrib'. I already briefly mentioned contrib with a link in chapter 2, but under 'contrib' in the Github repository of Airflow you can find standard connectors. The names we use here almost speak for themselves: 'bigquery_operator' to execute queries on BigQuery and 'bigquery_to_gcs' to store BigQuery data in Google Cloud Storage. 
+We then import two operators from 'contrib'. I already briefly mentioned contrib with a link in chapter 2. Under 'contrib' in the Github repository of Airflow you can find standard connectors. The names we use here almost speak for themselves: 'bigquery_operator' to execute queries on BigQuery and 'bigquery_to_gcs' to store BigQuery data in Google Cloud Storage. 
 We also import 'bash_operator' to be able to execute bash commands. Airflow provides operators for many common tasks, including ():
 
 * BashOperator - executes a bash command
@@ -140,7 +140,7 @@ As shown in the screen dump below:
 <sup>figure 5. Airflow variables</sup>
 <br/>
 Check https://cloud.google.com/storage/docs/creating-buckets if you need more information on creating a Google Cloud Storage bucket,
-as this is beyond the scope of this Airflow POC example.
+as this is beyond the scope of this Airflow tutorial.
 
 Apache Airflow allows the usage of Jinja templating, which makes available multiple helpful variables and macros to aid in date manipulation (https://airflow.apache.org/macros.html and https://diogoalexandrefranco.github.io/about-airflow-date-macros-ds-and-execution-date/). 
 
@@ -148,7 +148,7 @@ In our script we will use the following example of a Jinja template and macro:
 ```
 max_query_date = '{{ (execution_date - macros.timedelta(days=1)).strftime("%Y-%m-%d") }}'
 ```
-This creates a date string in format 'yyy-mm-dd', with the date one day prior to the execution date. I highlight that the execution date can be in the past when applying backfill, which we will use in our script. Later on, you will be able to the effects of this in the created log files.
+This creates a date string in format 'yyy-mm-dd', with the date one day prior to the execution date. I highlight that the execution date can be in the past when applying backfill (catchup), which we will use in our script. Later on, you will be able to the effects of this in the created log files. In chapter 5 we will see where to find the log files.
 
 #### 4.2 Default arguments
 By defining default arguments, we have the choice to explicitly pass a set of arguments to each task. So, put differently, these arguments are broadcasted to all the tasks in the DAG. Our DAG contains:
@@ -203,10 +203,10 @@ dag = DAG(
     schedule_interval=schedule_interval
     )
 ```
-followed by a reference to this 'dag' within each task by stating 'dag=dag'.
+followed by a reference to this 'dag' within each and every task by stating 'dag=dag'.
 
 #### 4.4 The tasks
-In this tutorial I will not elaborate much on the tasks, because there are endless possibilities in that respect. In the code itself I have included some comments to accompany the tasks or our DAG. The code below is the first task, which is a BashOperator task. It will create a dataset with a name under the variable bq_dataset_name, in case it does not already exist:
+In this tutorial I will not elaborate much on the tasks, because there are endless possibilities in that respect. In the code itself I have included some comments to accompany the tasks or our DAG. The code below is just the first task, which is a BashOperator task. It will create a dataset with a name under the variable bq_dataset_name, in case it does not already exist:
 ```
 t1_make_bq_dataset = bash_operator.BashOperator(
         task_id='make_bq_dataset',
@@ -234,7 +234,7 @@ There are even more variations, which you can find on https://airflow.apache.org
 
 After we have entered the variables in the web UI (paragraph 4.1), we can upload the .py file from the DAG folder in this repository to Airflow. Follow the link 'DAGs folder' as displayed in figure 3 and then use the button 'Upload files'. 
 
-We can then follow the execution of the DAG by following the link 'Airflow web UI' as displayed in figure 3, and then drill down on the DAGs name, which will become a link. You will then see something like you can see in figure 6. You can then click on the small dark green squares (task success) and then check 'view log'. 
+We can then follow the execution of the DAG by following the link 'Airflow web UI' as displayed in figure 3, and then drill down on the DAGs name, which will become a link. You will then see something like figure 6. You can then click on the small dark green squares (task success) and then check 'view log' to check the logs. Also to check for errors if the squares do not turn dark green.
 
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview2.PNG" width="1183" height="647">
 <sup>figure 6. Airflow Tree View</sup>
