@@ -236,5 +236,5 @@ After we have entered the variables in the web UI (paragraph 4.1), we can upload
 
 We can then follow the execution of the DAG by following the link 'Airflow web UI' as displayed in figure 3, and then drill down on the DAGs name, which will become a link. You will then see something like you can see in figure 6. You can then click on the small dark green squares (task success) and then check 'view log'. 
 
-<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview.PNG" width="1183" height="647">
+<img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/airflowtreeview2.PNG" width="1183" height="647">
 <sup>figure 6. Airflow Tree View</sup>
