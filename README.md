@@ -3,7 +3,7 @@
 ### 1. Introduction
 The aim of this Airflow tutorial is to explain the main principles of Airflow and to provide you with a hands-on working example to get you up to speed with Airflow. Following the definition of Airflow, 'Airflow is a platform to programmatically author, schedule and monitor workflows. Airflow is not a data streaming solution.
 
-I wrote this tutorial as a Data Scientist and I believe many people would say Airflow is a tool for Data Engineers to implement ETL processes. Though, for several reasons I believe that being able to perform some Data Engineering tasks as a Data Scientist is a valuable asset:
+I wrote this tutorial as a Data Scientist and I believe many people would say Airflow is a tool for Data Engineers to implement ETL processes. Though, for several reasons I believe that being able to perform some Data Engineering tasks as a Data Scientist is valuable:
 
 * With the rise of Cloud providers like AWS, GCP and Azure, which offer a suite of offerings (storage, streaming, Apps, Web, ML), the traditional Data Science pyramid as shown below becomes increasingly vertically integrated. These movements make it easier and faster to create end-to-end solutions in the cloud, even for a small team or as a single person (e.g. https://aws.amazon.com/blogs/machine-learning/build-end-to-end-machine-learning-workflows-with-amazon-sagemaker-and-apache-airflow/). Artificial intelligence, Internet of things and analytics are the upsell technologies for cloud vendors;
 * Quite often companies do not have dedicated DS an DE teams, as most companies do not handle terabytes of data daily and/or streaming data (Big data). Even if they have both, either of the two might not be available at that time due to other priorities. This makes it an asset to be able to do work on both. Besides, if you, as a Data Scientist or an Engineer, can prototype a working Proof-Of-Concept (most likely involving both DE and DS work), it then becomes easier to convince others within the company about the value that can be created.
@@ -23,7 +23,7 @@ Working with Airflow provides you with a number of advantages as opposed to work
 * Thanks to the ease of use data engineers and data scientists don't waste much time on DevOps.
 
 ### 3. Setting up the Airflow environment in Google Cloud Platform (GCP)
-We will set up an Airflow environment in Google Cloud. Google has integrated Airflow in its offering Cloud Composer, with which setting up and Airfow environment is just a few clicks away. In addition GCP comes with a free $300,- trial credit per google account (Gmail account) for a one year period.
+We will set up an Airflow environment in Google Cloud. Google has integrated Airflow in its offering Cloud Composer, with which setting up and Airflow environment is just a few clicks away. In addition GCP comes with a free $300,- trial credit per google account (Gmail account) for a one year period.
 
 Within your Google Account launch your Google cloud console (https://console.cloud.google.com) and navigate to 'Composer' via the 'hamburger' icon in the top left corner. You will then see the options as displayed in the following visual:
 
@@ -148,7 +148,7 @@ In our script we will use the following example of a Jinja template and macro:
 ```
 max_query_date = '{{ (execution_date - macros.timedelta(days=1)).strftime("%Y-%m-%d") }}'
 ```
-This creates a date string in format 'yyy-mm-dd', with the date one day prior to the execution date. I highlight that the execution date can be in the past when applying backfill, which we will use in our script. Later on you will be able to the effects of this in the created log files.
+This creates a date string in format 'yyy-mm-dd', with the date one day prior to the execution date. I highlight that the execution date can be in the past when applying backfill, which we will use in our script. Later on, you will be able to the effects of this in the created log files.
 
 #### 4.2 Default arguments
 By defining default arguments, we have the choice to explicitly pass a set of arguments to each task. So, put differently, these arguments are broadcasted to all the tasks in the DAG. Our DAG contains:
@@ -206,7 +206,7 @@ dag = DAG(
 followed by a reference to this 'dag' within each task by stating 'dag=dag'.
 
 #### 4.4 The tasks
-In this tutorial I will not elaborate much on the tasks, because there are endless possibilities in that respect. In the code itself I have included some comments to accompany the tasks or our DAG. For instance the first task in our DAG is a BashOperator task, which will create a dataset with a certain name in case it does not already exist:
+In this tutorial I will not elaborate much on the tasks, because there are endless possibilities in that respect. In the code itself I have included some comments to accompany the tasks or our DAG. The code below is the first task, which is a BashOperator task. It will create a dataset with a name under the variable bq_dataset_name, in case it does not already exist:
 ```
 t1_make_bq_dataset = bash_operator.BashOperator(
         task_id='make_bq_dataset',
@@ -232,7 +232,7 @@ t2_bq_recent_questions_query.set_upstream(t1_make_bq_dataset)
 There are even more variations, which you can find on https://airflow.apache.org/tutorial.html#setting-up-dependencies.
 ### 5. Deploying a DAG and checking the logs
 
-After we have entered the variables in the web UI (pagragraph 4.1), we can upload the .py file from the DAG folder in this repository to Airflow. Follow the link 'DAGs folder' as displayed in figure 3 and then use the button 'Upload files'. 
+After we have entered the variables in the web UI (paragraph 4.1), we can upload the .py file from the DAG folder in this repository to Airflow. Follow the link 'DAGs folder' as displayed in figure 3 and then use the button 'Upload files'. 
 
 We can then follow the execution of the DAG by following the link 'Airflow web UI' as displayed in figure 3, and then drill down on the DAGs name, which will become a link. You will then see something like you can see in figure 6. You can then click on the small dark green squares (task success) and then check 'view log'. 
 
