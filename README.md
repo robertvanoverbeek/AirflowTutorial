@@ -49,7 +49,7 @@ After a few minutes you will notice that the creation of the environment has bee
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerConfig.png" width="820" height="767">
 <sup>figure 3. Composer Config</sup>
 <br/>
-Note: If you have Google Cloud SDK installed, you can also create the above-mentioned Composer environment with the command:
+Note: If you have Google Cloud SDK installed, you can also create the above-mentioned Composer environment with the command (choose environment name and fill in your project ID):
 
 ```
 gcloud beta composer environments create <your composer environment name> --project=<your project id> --location=europe-west1 --zone=europe-west1-d  --disk-size=20GB --machine-type=n1-standard-1 --node-count=3 --python-version=3
