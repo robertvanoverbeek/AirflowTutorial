@@ -50,9 +50,11 @@ After a few minutes you will notice that the creation of the environment has bee
 <sup>figure 3. Composer Config</sup>
 <br/>
 Note: If you have Google Cloud SDK installed, you can also create the above-mentioned Composer environment with the command:
+
 ```
 gcloud beta composer environments create <your composer environment name> --project=<your project id> --location=europe-west1 --zone=europe-west1-d  --disk-size=20GB --machine-type=n1-standard-1 --node-count=3 --python-version=3
 ```
+
 The environment comes pre-installed with several Python packages, such as:
 
 Pandas, google-cloud-bigquery, google-cloud-dataflow, google-cloud-storage, Pandas-gbq, tensorflow and kubernetes.
