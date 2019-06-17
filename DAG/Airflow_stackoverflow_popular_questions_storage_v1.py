@@ -26,7 +26,6 @@ In the above-mentioned github repo you can also find more examples.
 
 # step 1/5, importing modules and declaring variables
 from datetime import date, datetime, timedelta
-# from airflow import macros
 from airflow import DAG
 from airflow import models
 from airflow.contrib.operators import bigquery_operator
