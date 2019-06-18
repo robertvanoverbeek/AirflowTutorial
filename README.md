@@ -1,7 +1,7 @@
 # Hands-on Airflow tutorial using Google Cloud Composer
 The aim of this Airflow tutorial is to explain the main principles of Airflow and to provide you with a hands-on working example to get you up to speed with Airflow. We will be using Google Cloud because of its free $300,- credit. Although it is perfectly fine to read through this tutorial without using Cloud Composer, just te learn how Airflow works, but the DAG we will apply is tailored to GCP. We will read and write from Google BigQuery and Google Cloud storage. 
 
-<span style=“color:red;”> text </span>
+<span style="color:red;"> text </span>
 
 Following the definition of Airflow, 'Airflow is a platform to programmatically author, schedule and monitor workflows. Airflow is not a data streaming solution. I will leave it at that, as I will provide many more details throughout this tutorial.  
 
