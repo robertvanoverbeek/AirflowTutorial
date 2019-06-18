@@ -32,7 +32,7 @@ If you already have a Google account, or once you have set it up, launch your Go
 <br/>
 
 ```diff
-- One note beforehand: in figure 2 you also see a delete button to delete the environment after usage 
+- One note beforehand: in figure 2 you also see a delete button to delete the environment after usage /
 in order to avoid unnecessary costs!
 ```
 
