@@ -30,7 +30,8 @@ If you already have a Google account, or once you have set it up, launch your Go
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
 <sup>figure 2. Composer Menu</sup>
 <br/>
-![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `One note beforehand: in figure 2 you also see a delete button to delete the environment after usage in order to avoid unnecessary costs!`
+
+- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `One note beforehand: in figure 2 you also see a delete button to delete the environment after usage in order to avoid unnecessary costs!`
 
 To create an environment:
 * You may tick the box beta features to be able to use the latest functionalities;
