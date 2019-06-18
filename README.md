@@ -31,6 +31,7 @@ If you already have a Google account, or once you have set it up, launch your Go
 <sup>figure 2. Composer Menu</sup>
 <br/>
 One note beforehand: in figure 2 you also see a delete button to delete the environment after usage in order to avoid unnecessary costs!
+
 ```diff
 + this will be highlighted in green
 - this will be highlighted in red
