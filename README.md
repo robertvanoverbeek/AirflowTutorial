@@ -30,11 +30,9 @@ If you already have a Google account, or once you have set it up, launch your Go
 <img src="https://github.com/robertvanoverbeek/AirflowTutorial/blob/master/images/ComposerMenu.PNG" width="774" height="265">
 <sup>figure 2. Composer Menu</sup>
 <br/>
-One note beforehand: in figure 2 you also see a delete button to delete the environment after usage in order to avoid unnecessary costs!
 
 ```diff
-+ this will be highlighted in green
-- this will be highlighted in red
+- One note beforehand: in figure 2 you also see a delete button to delete the environment after usage in order to avoid unnecessary costs!
 ```
 
 To create an environment:
