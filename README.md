@@ -18,7 +18,7 @@ Working with Airflow provides you with a number of advantages as opposed to work
 * It facilitates backfilling of historical data (catchup);
 * Built in Monitoring / logging;
 * Based on widely used Python;
-* There is a large user group contributing by building standard operators, enabling connections to many other infrastructures. These can be found in 'contrib' on https://github.com/apache/airflow/tree/master/airflow/contrib;
+* There is a growing user group contributing by building standard operators, enabling connections to many other infrastructures. These can be found in 'contrib' on https://github.com/apache/airflow/tree/master/airflow/contrib;
 * Integration in the cloud with big data and machine learning. You can build end-to-end (ML) solutions in the cloud with Airflow in combination with the other cloud services;
 * Thanks to the ease of use data engineers and data scientists do not waste much time on DevOps.
 
